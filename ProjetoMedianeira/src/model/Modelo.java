@@ -8,16 +8,18 @@ public class Modelo {
     private String geracao;
     private String modelo;
     private String tipo;
+    private int id;
     private List<Boolean> poltrona;
     
     //Construtor
     public Modelo() {}
-    public Modelo(String marca, String geracao, String modelo, String tipo, List<Boolean> poltrona) {
+    public Modelo(String marca, String geracao, String modelo, String tipo, List<Boolean> poltrona, int id) {
         this.marca = marca;
         this.geracao = geracao;
         this.modelo = modelo;
         this.tipo = tipo;
         this.poltrona = poltrona;
+        this.id = id;
     }
     public Modelo(Modelo objeto) {
         this.marca = objeto.marca;
@@ -25,6 +27,7 @@ public class Modelo {
         this.modelo = objeto.modelo;
         this.tipo = objeto.tipo;
         this.poltrona = objeto.poltrona;
+        this.id = objeto.id;
     }
     
     //Getters e Setters
@@ -46,6 +49,9 @@ public class Modelo {
     public boolean getPoltrona(int num) {
         return poltrona.get(num);
     }
+    public int getId() {
+        return id;
+    }
     public void setMarca(String marca) {
         this.marca = marca;
     }
@@ -66,5 +72,8 @@ public class Modelo {
     }
     public void setPoltrona(int num, boolean estado) {
         this.poltrona.set(num, estado);
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 }
