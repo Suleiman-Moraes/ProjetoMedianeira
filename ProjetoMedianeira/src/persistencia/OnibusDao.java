@@ -58,13 +58,13 @@ public class OnibusDao implements ICrudDao<Onibus>{
     public Onibus visualizarUm(Object... object) throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "SELECT * FROM motorista WHERE id=?;";
+        String sql = "SELECT * FROM onibus WHERE id=?;";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, (int) object[0]);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            return new Onibus(rs.getString("numero"), rs.getString("ano"), rs.getModelo().getId("id"));
+            return new Onibus(rs.getString("numero"), rs.getString("ano"), new ModeloDao().visualizarUm(rs.getInt("modelo")));
         }
         return null;
     }
@@ -77,9 +77,10 @@ public class OnibusDao implements ICrudDao<Onibus>{
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
-        List<Motorista> lista = new ArrayList<>();
+        List<Onibus> lista = new ArrayList<>();
         while (rs.next()) {
-            lista.add(new Motorista(rs.getString("nome"), rs.getString("localizacao"), rs.getString("cnh"), rs.getInt("id")));
+           lista.add( new Onibus(rs.getString("numero"), rs.getString("ano"), 
+            new ModeloDao().visualizarUm(rs.getInt("modelo"))));
         }
         return lista;
     }
