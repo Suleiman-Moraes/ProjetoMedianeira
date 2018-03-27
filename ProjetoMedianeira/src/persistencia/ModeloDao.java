@@ -61,7 +61,7 @@ public class ModeloDao implements ICrudDao<Modelo>{
     public Modelo visualizarUm(Object... object) throws SQLException {
         Connection con = util.Conexao.getConexao();
         
-        String sql = "SELECT * FROM motorista WHERE id=?;";
+        String sql = "SELECT * FROM modelo WHERE id=?;";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, (int) object[0]);
         ResultSet rs = ps.executeQuery();
