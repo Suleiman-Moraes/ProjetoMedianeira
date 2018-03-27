@@ -1,13 +1,13 @@
 package model;
 public class Onibus {
     //Atributos
-    private int numero;
+    private String numero;
     private String ano;
     private Modelo modelo;
     
     //Construtor
     public Onibus() {}
-    public Onibus(int numero, String ano, Modelo modelo) {
+    public Onibus(String numero, String ano, Modelo modelo) {
         this.numero = numero;
         this.ano = ano;
         this.modelo = modelo;
@@ -19,7 +19,7 @@ public class Onibus {
     }
     
     //Getters e Setters
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
     public String getAno() {
@@ -28,7 +28,7 @@ public class Onibus {
     public Modelo getModelo() {
         return modelo;
     }
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
     public void setAno(String ano) {
