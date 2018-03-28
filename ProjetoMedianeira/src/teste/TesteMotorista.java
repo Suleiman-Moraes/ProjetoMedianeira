@@ -1,7 +1,6 @@
 package teste;
 
 import model.Motorista;
-import service.ICrudService;
 import service.MotoristaService;
 
 public class TesteMotorista {

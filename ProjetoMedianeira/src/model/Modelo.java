@@ -9,11 +9,11 @@ public class Modelo {
     private String modelo;
     private String tipo;
     private int id;
-    private List<Boolean> poltrona;
+    private int poltrona;
     
     //Construtor
     public Modelo() {}
-    public Modelo(String marca, String geracao, String modelo, String tipo, List<Boolean> poltrona, int id) {
+    public Modelo(String marca, String geracao, String modelo, String tipo, int poltrona, int id) {
         this.marca = marca;
         this.geracao = geracao;
         this.modelo = modelo;
@@ -43,11 +43,8 @@ public class Modelo {
     public String getTipo() {
         return tipo;
     }
-    public List<Boolean> getListaPoltrona() {
+    public int getPoltrona() {
         return poltrona;
-    }
-    public boolean getPoltrona(int num) {
-        return poltrona.get(num);
     }
     public int getId() {
         return id;
@@ -64,14 +61,8 @@ public class Modelo {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    public void setPoltrona(List<Boolean> poltrona) {
+    public void setPoltrona(int poltrona) {
         this.poltrona = poltrona;
-    }
-    public void setPoltrona(int num) {
-        this.poltrona.set(num, Boolean.TRUE);
-    }
-    public void setPoltrona(int num, boolean estado) {
-        this.poltrona.set(num, estado);
     }
     public void setId(int id) {
         this.id = id;

@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import model.Modelo;
-import model.Motorista;
 
 public class ModeloDao implements ICrudDao<Modelo>{
 
@@ -15,13 +15,14 @@ public class ModeloDao implements ICrudDao<Modelo>{
     public void inserir(Modelo t) throws SQLException {
         Connection con = util.Conexao.getConexao();
         
-        String sql = "INSERT INTO Modelo (marca, geracao, modelo, tipo) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Modelo (marca, geracao, modelo, tipo, poltronas) VALUES (?,?,?,?,?)";
         
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, t.getMarca());
         ps.setString(2, t.getGeracao());
         ps.setString(3, t.getModelo());
         ps.setString(4, t.getTipo());
+        ps.setInt(5, t.getPoltrona());
         ps.execute();
         
         String sql2 = "SELECT currval('modelo_id_seq');";
@@ -46,14 +47,15 @@ public class ModeloDao implements ICrudDao<Modelo>{
     public void alterar(Modelo t) throws SQLException {
         Connection con = util.Conexao.getConexao();
         
-        String sql = "UPDATE modelo SET marca=?, geracao=?, modelo=?, tipo=? WHERE id=?;";
+        String sql = "UPDATE modelo SET marca=?, geracao=?, modelo=?, tipo=?, poltronas=? WHERE id=?;";
         
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, t.getMarca());
         ps.setString(2, t.getGeracao());
         ps.setString(3, t.getModelo());
         ps.setString(4, t.getTipo());
-        ps.setInt(5, t.getId());
+        ps.setInt(5, t.getPoltrona());
+        ps.setInt(6, t.getId());
         ps.executeUpdate();
     }
 
@@ -67,14 +69,26 @@ public class ModeloDao implements ICrudDao<Modelo>{
         ResultSet rs = ps.executeQuery();
         
         while (rs.next()) {
-            return new Modelo(rs.getString("nome"), rs.getString("localizacao"), rs.getString("cnh"), rs.getInt("id"));
+            return new Modelo(rs.getString("marca"), rs.getString("geracao"), 
+                    rs.getString("modelo"), rs.getString("tipo"), rs.getInt("poltronas"), rs.getInt("id"));
         }
         return null;
     }
 
     @Override
     public List<Modelo> visualizarAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection con = util.Conexao.getConexao();
+        
+        String sql = "SELECT * FROM modelo ORDER BY geracao;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        
+        List<Modelo> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(new Modelo(rs.getString("marca"), rs.getString("geracao"), 
+                    rs.getString("modelo"), rs.getString("tipo"), rs.getInt("poltronas"), rs.getInt("id")));
+        }
+        return lista;
     }
     
 }
