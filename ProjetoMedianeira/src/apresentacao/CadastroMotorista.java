@@ -1,13 +1,17 @@
 package apresentacao;
 
+import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Motorista;
 import service.MotoristaService;
 
 public class CadastroMotorista extends javax.swing.JInternalFrame {
 
     private JDesktopPane principal;
+    private Vector<String> cabecalho;
+    private Vector detalhe;
     
     public CadastroMotorista() {
         initComponents();
@@ -242,7 +246,11 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
-            
+            preencherTela();
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe);
+            principal.add(tela);
+            tela.setVisible(true);
+            tela.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -271,6 +279,29 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    private void preencherTela() {
+        try {
+            cabecalho = new Vector();
+            cabecalho.add("Indentificador");
+            cabecalho.add("Nome");
+            cabecalho.add("Localização");
+            cabecalho.add("CNH");
+            
+            detalhe = new Vector();
+            for(Motorista tipo : new MotoristaService().visualizarAll()){
+                Vector<String> linha = new Vector();
+                
+                linha.add(tipo.getId() + "");
+                linha.add(tipo.getNome());
+                linha.add(tipo.getLocalizacao());
+                linha.add(tipo.getCnh());
+                detalhe.add(linha);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }   
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
