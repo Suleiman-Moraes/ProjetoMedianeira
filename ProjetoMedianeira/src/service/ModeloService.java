@@ -27,5 +27,4 @@ public class ModeloService implements ICrudService<Modelo>{
     public List<Modelo> visualizarAll() throws SQLException {
         return new ModeloDao().visualizarAll();
     }
-    
 }

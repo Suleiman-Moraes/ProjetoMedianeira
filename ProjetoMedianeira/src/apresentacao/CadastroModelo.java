@@ -1,34 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package apresentacao;
 
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import model.Motorista;
-import service.MotoristaService;
+import model.Modelo;
+import service.ModeloService;
 
-public class CadastroMotorista extends javax.swing.JInternalFrame {
+/**
+ *
+ * @author Lenovo
+ */
+public class CadastroModelo extends javax.swing.JInternalFrame {
 
     private JDesktopPane principal;
     private Vector<String> cabecalho;
     private Vector detalhe;
-    private Motorista motorista;
+    private Modelo modelo;
     
-    public CadastroMotorista() {
+    public CadastroModelo() {
         initComponents();
     }
-
-    public CadastroMotorista(JDesktopPane principal) {
+    public CadastroModelo(JDesktopPane principal) {
         this();
         this.principal = principal;
     }
 
-    public CadastroMotorista(JDesktopPane principal, Motorista motorista) {
+    public CadastroModelo(JDesktopPane principal, Modelo modelo) {
         this();
         this.principal = principal;
-        this.motorista = motorista;
-        this.preencherTela(motorista);
+        this.modelo = modelo;
+        this.preencherTela(modelo);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,12 +56,16 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         jButtonlLimpar = new javax.swing.JButton();
         jButtonFechar = new javax.swing.JButton();
         jTextFieldIndentificador = new javax.swing.JTextField();
-        jTextFieldNome = new javax.swing.JTextField();
+        jTextFieldMarca = new javax.swing.JTextField();
         jButtonPesquisar = new javax.swing.JButton();
-        jTextFieldCnh = new javax.swing.JTextField();
-        jComboBoxLocalizacao = new javax.swing.JComboBox<>();
+        jTextFieldPoltrona = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldGeracao = new javax.swing.JTextField();
+        jTextFieldModelo = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextFieldTipo = new javax.swing.JTextField();
 
-        setClosable(true);
+        setTitle("Cadastro Modelo");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
@@ -61,13 +73,13 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         jLabel1.setText("Indentificador");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Nome");
+        jLabel2.setText("Marca");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Localização");
+        jLabel3.setText("Modelo");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("CNH");
+        jLabel4.setText("Poltrona");
 
         jButtonSalvar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButtonSalvar.setText("SALVAR");
@@ -105,7 +117,7 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         jTextFieldIndentificador.setEditable(false);
         jTextFieldIndentificador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldMarca.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jButtonPesquisar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButtonPesquisar.setText("PESQUISAR");
@@ -115,15 +127,24 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextFieldCnh.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextFieldCnh.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextFieldPoltrona.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldPoltrona.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldCnhKeyTyped(evt);
+                jTextFieldPoltronaKeyTyped(evt);
             }
         });
 
-        jComboBoxLocalizacao.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jComboBoxLocalizacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Goiânia", "Palmas" }));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("Geração");
+
+        jTextFieldGeracao.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        jTextFieldModelo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Tipo");
+
+        jTextFieldTipo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,15 +153,6 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonlLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
@@ -153,10 +165,29 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
                                 .addComponent(jTextFieldIndentificador, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonPesquisar))
-                            .addComponent(jTextFieldNome)
-                            .addComponent(jTextFieldCnh)
-                            .addComponent(jComboBoxLocalizacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jTextFieldMarca)
+                            .addComponent(jTextFieldModelo)
+                            .addComponent(jTextFieldPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldGeracao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonlLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,22 +200,27 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBoxLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldGeracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jTextFieldCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonlLimpar)
                     .addComponent(jButtonFechar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,15 +246,17 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
             this.validaCampos();
-            Motorista motorista = new Motorista();
-            motorista.setNome(jTextFieldNome.getText().trim());
-            motorista.setLocalizacao((String) jComboBoxLocalizacao.getSelectedItem());
-            motorista.setCnh(jTextFieldCnh.getText().trim());
-            
+            Modelo modelo = new Modelo();
+            modelo.setGeracao(jTextFieldGeracao.getText().trim());
+            modelo.setMarca(jTextFieldMarca.getText().trim());
+            modelo.setModelo(jTextFieldModelo.getText().trim());
+            modelo.setPoltrona(Integer.parseInt(jTextFieldPoltrona.getText().trim()));
+            modelo.setTipo(jTextFieldTipo.getText().trim());
+
             if(!jTextFieldIndentificador.getText().trim().equals(""))
-                motorista.setId(Integer.parseInt(jTextFieldIndentificador.getText().trim()));
-            
-            new MotoristaService().salvar(motorista);
+            modelo.setId(Integer.parseInt(jTextFieldIndentificador.getText().trim()));
+
+            new ModeloService().salvar(modelo);
             JOptionPane.showMessageDialog(rootPane, "Dados Inseridos com sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             this.limparTela();
         } catch (Exception e) {
@@ -228,15 +266,15 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
-            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar a exclusão do Motorista?",
-                    "VIAÇÃO NOSSA SENHORA DE MEDIANEIRA ltda", JOptionPane.YES_NO_OPTION);
-            
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar a exclusão do Modelo?",
+                "VIAÇÃO NOSSA SENHORA DE MEDIANEIRA ltda", JOptionPane.YES_NO_OPTION);
+
             if (resposta == JOptionPane.YES_OPTION) {
-                new MotoristaService().deletar(Integer.parseInt(jTextFieldIndentificador.getText()));
-                
+                new ModeloService().deletar(Integer.parseInt(jTextFieldIndentificador.getText()));
+
                 JOptionPane.showMessageDialog(rootPane, "Operação efetuada com sucesso!",
-                        "Informação", JOptionPane.INFORMATION_MESSAGE);
-                
+                    "Informação", JOptionPane.INFORMATION_MESSAGE);
+
                 limparTela();
             }
         } catch (Exception e) {
@@ -263,7 +301,7 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "motorista");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "modelo");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -272,21 +310,22 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
-    private void jTextFieldCnhKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCnhKeyTyped
+    private void jTextFieldPoltronaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPoltronaKeyTyped
         try {
             int x = Integer.parseInt(String.valueOf(evt.getKeyChar()));
-            if(jTextFieldCnh.getText().length() >= 11) evt.consume();
         } catch (Exception e) {
             evt.consume();
         }
-    }//GEN-LAST:event_jTextFieldCnhKeyTyped
-    
-    private void preencherTela(Motorista mot){
+    }//GEN-LAST:event_jTextFieldPoltronaKeyTyped
+
+    private void preencherTela(Modelo modelo){
         try {
-            jTextFieldNome.setText(mot.getNome());
-            jComboBoxLocalizacao.setSelectedItem(mot.getLocalizacao());
-            jTextFieldIndentificador.setText(mot.getId() + "");
-            jTextFieldCnh.setText(mot.getCnh());
+            jTextFieldGeracao.setText(modelo.getGeracao());
+            jTextFieldIndentificador.setText(modelo.getId() + "");
+            jTextFieldMarca.setText(modelo.getMarca());
+            jTextFieldModelo.setText(modelo.getModelo());
+            jTextFieldPoltrona.setText(modelo.getPoltrona() + "");
+            jTextFieldTipo.setText(modelo.getTipo());
 
             jButtonExcluir.setEnabled(true);
         } catch (Exception e) {
@@ -295,17 +334,20 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     }
     
     private void validaCampos() throws Exception{
-        if(jComboBoxLocalizacao.getSelectedIndex() == 0) throw new Exception("Selecione uma Localização.");
-        if(jTextFieldCnh.getText().trim().equals("")) throw new Exception("Insira o número da CNH.");
-        if(jTextFieldNome.getText().trim().equals("")) throw new Exception("Insira o Nome.");
-        if(jTextFieldCnh.getText().length() != 11) throw new Exception("CNH Obrigatório 11 Dígitos.");
+        if(jTextFieldGeracao.getText().trim().equals("")) throw new Exception("Insira a Geração.");
+        if(jTextFieldMarca.getText().trim().equals("")) throw new Exception("Insira a Marca.");
+        if(jTextFieldModelo.getText().trim().equals("")) throw new Exception("Insira o Modelo.");
+        if(jTextFieldPoltrona.getText().trim().equals("")) throw new Exception("Insira a Poltrona.");
+        if(jTextFieldTipo.getText().trim().equals("")) throw new Exception("Insira o Tipo.");
     }
     private void limparTela(){
         try {
-            jTextFieldNome.setText("");
-            jComboBoxLocalizacao.setSelectedIndex(0);
+            jTextFieldGeracao.setText("");
             jTextFieldIndentificador.setText("");
-            jTextFieldCnh.setText("");
+            jTextFieldMarca.setText("");
+            jTextFieldModelo.setText("");
+            jTextFieldPoltrona.setText("");
+            jTextFieldTipo.setText("");
 
             jButtonExcluir.setEnabled(false);
         } catch (Exception e) {
@@ -313,23 +355,28 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         }
     }
     
-    private void preencherTela() {
+    public void preencherTela() {
         try {
             cabecalho = new Vector();
-            cabecalho.add("Indentificador");
-            cabecalho.add("Nome");
-            cabecalho.add("Localização");
-            cabecalho.add("CNH");
+            getCabecalho().add("Indentificador");
+            getCabecalho().add("Marca");
+            getCabecalho().add("Modelo");
+            getCabecalho().add("Geração");
+            getCabecalho().add("Tipo");
+            getCabecalho().add("Poltrona");
             
             detalhe = new Vector();
-            for(Motorista tipo : new MotoristaService().visualizarAll()){
+            for(Modelo modelo : new ModeloService().visualizarAll()){
                 Vector<String> linha = new Vector();
                 
-                linha.add(tipo.getId() + "");
-                linha.add(tipo.getNome());
-                linha.add(tipo.getLocalizacao());
-                linha.add(tipo.getCnh());
-                detalhe.add(linha);
+                linha.add(modelo.getId() + "");
+                linha.add(modelo.getMarca());
+                linha.add(modelo.getModelo());
+                linha.add(modelo.getGeracao());
+                linha.add(modelo.getTipo());
+                linha.add(modelo.getPoltrona() + "");
+                
+                getDetalhe().add(linha);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -342,14 +389,26 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonPesquisar;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonlLimpar;
-    private javax.swing.JComboBox<String> jComboBoxLocalizacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextFieldCnh;
+    private javax.swing.JTextField jTextFieldGeracao;
     private javax.swing.JTextField jTextFieldIndentificador;
-    private javax.swing.JTextField jTextFieldNome;
+    private javax.swing.JTextField jTextFieldMarca;
+    private javax.swing.JTextField jTextFieldModelo;
+    private javax.swing.JTextField jTextFieldPoltrona;
+    private javax.swing.JTextField jTextFieldTipo;
     // End of variables declaration//GEN-END:variables
+
+    public Vector getDetalhe() {
+        return detalhe;
+    }
+
+    public Vector<String> getCabecalho() {
+        return cabecalho;
+    }
 }

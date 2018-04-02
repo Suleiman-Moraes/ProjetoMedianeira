@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Motorista;
 import model.Onibus;
 
 public class OnibusDao implements ICrudDao<Onibus>{
@@ -14,11 +13,11 @@ public class OnibusDao implements ICrudDao<Onibus>{
     public void inserir(Onibus t) throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "INSERT INTO onibus (numero, ano, modelo) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO onibus (numero, ano, modelo) VALUES (?,?,?)";
 
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, (String) t.getAno());
-        ps.setString(2, t.getNumero());
+        ps.setString(2, t.getAno());
+        ps.setString(1, t.getNumero());
         ps.setInt(3, t.getModelo().getId());
         ps.execute();
 
@@ -34,9 +33,9 @@ public class OnibusDao implements ICrudDao<Onibus>{
     public void deletar(Object... object) throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "DELETE FROM onibus WHERE id=?;";
+        String sql = "DELETE FROM onibus WHERE numero=?;";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, (int) object[0]);
+        ps.setString(1, (String) object[0]);
 //        ps.setInt(2, (int ) numero[0]); 
         ps.execute();
     }
@@ -45,12 +44,13 @@ public class OnibusDao implements ICrudDao<Onibus>{
     public void alterar(Onibus t) throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "UPDATE motorista SET nome=?, localizacao=?, cnh=? WHERE id=?;";
+        String sql = "UPDATE onibus SET ano=?, modelo=? WHERE numero=?;";
 
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, t.getNumero());
-        ps.setString(2, t.getAno());
-        ps.setInt(3, t.getModelo().getId());
+        ps.setInt(2, t.getModelo().getId());
+        ps.setString(1, t.getAno());
+        ps.setString(3, t.getNumero());
+        
         ps.executeUpdate();
     }
 
@@ -58,9 +58,9 @@ public class OnibusDao implements ICrudDao<Onibus>{
     public Onibus visualizarUm(Object... object) throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "SELECT * FROM onibus WHERE id=?;";
+        String sql = "SELECT * FROM onibus WHERE numero=?;";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, (int) object[0]);
+        ps.setString(1, (String) object[0]);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -73,7 +73,7 @@ public class OnibusDao implements ICrudDao<Onibus>{
     public List<Onibus> visualizarAll() throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "SELECT * FROM motorista ORDER BY nome;";
+        String sql = "SELECT * FROM onibus ORDER BY numero;";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
@@ -83,5 +83,20 @@ public class OnibusDao implements ICrudDao<Onibus>{
             new ModeloDao().visualizarUm(rs.getInt("modelo"))));
         }
         return lista;
+    }
+    
+    public boolean existe(String numero) throws SQLException{
+        Connection con = util.Conexao.getConexao();
+
+        String sql = "SELECT count(numero) as qtde FROM onibus WHERE numero=?;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, numero);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            if(rs.getInt("qtde") > 0) return true;
+            else return false;
+        }
+        return false;
     }
 }

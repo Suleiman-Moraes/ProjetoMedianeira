@@ -2,19 +2,37 @@ package apresentacao;
 
 import java.util.Vector;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Modelo;
+import model.Motorista;
+import model.Onibus;
+import service.ModeloService;
+import service.MotoristaService;
+import service.OnibusService;
 
 public class TelaPesquisa extends javax.swing.JInternalFrame {
     
-    JDesktopPane principal;
+    private JDesktopPane principal;
+    private String chamada;
+    private Onibus onibus;
     
     public TelaPesquisa() {
         initComponents();
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe) {
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada) {
         this();
+        this.chamada = chamada;
+        this.principal = principal;
+        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
+    }
+    
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Onibus onibus) {
+        this();
+        this.onibus = onibus;
+        this.chamada = chamada;
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
@@ -108,9 +126,21 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
 
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
         try {
-//            FrmTipoAssociadoCadastro tela = new FrmTipoAssociadoCadastro(principal);
-//            principal.add(tela);
-//            tela.setVisible(true);
+            JInternalFrame tela = null;
+            if(chamada == "motorista"){
+                tela = new CadastroMotorista(principal);
+            }
+            else if(chamada == "modelo"){
+                tela = new CadastroModelo(principal);
+            }
+            else if(chamada == "onibus"){
+                tela = new CadastroOnibus(principal);
+            }
+            else if(chamada == "onibus/modelo"){
+                tela = new CadastroOnibus(principal);
+            }
+            principal.add(tela);
+            tela.setVisible(true);
             this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -118,7 +148,36 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonFecharActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        // TODO add your handling code here:
+        try {
+            JInternalFrame tela = null;
+            int linha = jTable1.getSelectedRow();
+            
+            if(chamada == "motorista"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Motorista motorista = new MotoristaService().visualizarUm(Integer.parseInt(codigo));
+                tela = new CadastroMotorista(principal, motorista);
+            }
+            else if(chamada == "modelo"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Modelo modelo = new ModeloService().visualizarUm(Integer.parseInt(codigo));
+                tela = new CadastroModelo(principal, modelo);
+            }
+            else if(chamada == "onibus"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Onibus onibus = new OnibusService().visualizarUm(codigo);
+                tela = new CadastroOnibus(principal, onibus);
+            }
+            else if(chamada == "onibus/modelo"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Modelo modelo = new ModeloService().visualizarUm(Integer.parseInt(codigo));
+                tela = new CadastroOnibus(principal, onibus, modelo);
+            }
+            principal.add(tela);
+            tela.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jTable1MousePressed
 
 

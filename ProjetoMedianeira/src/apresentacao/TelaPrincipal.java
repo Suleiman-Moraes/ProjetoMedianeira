@@ -18,7 +18,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().add(tela);
                 
     }
-
+    
+    private void sair(){
+        try {
+            int x = JOptionPane.showConfirmDialog(rootPane, "Sair sem \"Salvar\" ??\nTodos os dados não salvos serão perdidios", "ALERTA", JOptionPane.YES_NO_OPTION);
+            if(x == 0 || x == -1) System.exit(0);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,6 +40,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemMotorista = new javax.swing.JMenuItem();
+        jMenuItemModelo = new javax.swing.JMenuItem();
+        jMenuItemOnibus = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -51,6 +62,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuCadastro.add(jMenuItemMotorista);
+
+        jMenuItemModelo.setText("Modelo");
+        jMenuItemModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemModeloActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemModelo);
+
+        jMenuItemOnibus.setText("Ônibus");
+        jMenuItemOnibus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOnibusActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemOnibus);
 
         jMenuBar1.add(jMenuCadastro);
 
@@ -101,6 +128,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemMotoristaActionPerformed
 
+    private void jMenuItemModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModeloActionPerformed
+        try {
+            CadastroModelo janela = new CadastroModelo(this.tela);
+            this.tela.add(janela);
+            janela.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItemModeloActionPerformed
+
+    private void jMenuItemOnibusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOnibusActionPerformed
+        try {
+            CadastroOnibus janela = new CadastroOnibus(this.tela);
+            this.tela.add(janela);
+            janela.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItemOnibusActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -135,22 +182,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void sair(){
-        try {
-            int x = JOptionPane.showConfirmDialog(rootPane, "Sair sem \"Salvar\" ??\nTodos os dados não salvos serão perdidios", "ALERTA", JOptionPane.YES_NO_OPTION);
-            if(x == 0 || x == -1) System.exit(0);
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemModelo;
     private javax.swing.JMenuItem jMenuItemMotorista;
+    private javax.swing.JMenuItem jMenuItemOnibus;
     private javax.swing.JMenu jMenuSair;
     // End of variables declaration//GEN-END:variables
 }
