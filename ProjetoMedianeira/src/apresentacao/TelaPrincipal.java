@@ -42,6 +42,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItemMotorista = new javax.swing.JMenuItem();
         jMenuItemModelo = new javax.swing.JMenuItem();
         jMenuItemOnibus = new javax.swing.JMenuItem();
+        jMenuItemOnibus1 = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -54,7 +55,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jMenuCadastro.setText("Cadastros");
+        jMenuCadastro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
+        jMenuItemMotorista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jMenuItemMotorista.setText("Motorista");
         jMenuItemMotorista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +66,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItemMotorista);
 
+        jMenuItemModelo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jMenuItemModelo.setText("Modelo");
         jMenuItemModelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,6 +75,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItemModelo);
 
+        jMenuItemOnibus.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jMenuItemOnibus.setText("Ônibus");
         jMenuItemOnibus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,11 +84,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItemOnibus);
 
+        jMenuItemOnibus1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jMenuItemOnibus1.setText("Viagem");
+        jMenuItemOnibus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOnibus1ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemOnibus1);
+
         jMenuBar1.add(jMenuCadastro);
 
         jMenuSair.setText("Sair");
+        jMenuSair.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jMenuItem1.setText("Sair");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +116,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 885, Short.MAX_VALUE)
+            .addGap(0, 887, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,6 +164,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemOnibusActionPerformed
 
+    private void jMenuItemOnibus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOnibus1ActionPerformed
+        try {
+            CadastroViagem janela = new CadastroViagem(this.tela);
+            this.tela.add(janela);
+            janela.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItemOnibus1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -189,6 +215,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemModelo;
     private javax.swing.JMenuItem jMenuItemMotorista;
     private javax.swing.JMenuItem jMenuItemOnibus;
+    private javax.swing.JMenuItem jMenuItemOnibus1;
     private javax.swing.JMenu jMenuSair;
     // End of variables declaration//GEN-END:variables
 }

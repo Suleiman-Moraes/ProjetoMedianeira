@@ -46,15 +46,15 @@ public class TesteViagem {
             
             Calendar calendar = Calendar.getInstance();
             calendar.set(2018, 3, 1);
-            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
-            calendar.set(2018, 3, 2);
-            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
-            calendar.set(2018, 3, 3);
-            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
-            calendar.set(2018, 3, 4);
-            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
-            calendar.set(2018, 2, 22);
-            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
+//            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
+//            calendar.set(2018, 3, 2);
+//            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
+//            calendar.set(2018, 3, 3);
+//            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
+//            calendar.set(2018, 3, 4);
+//            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
+//            calendar.set(2018, 2, 22);
+//            System.out.println(service.retornarDisponibilidade(y.getMotorista(), calendar.getTime()));
             
             calendar.set(2018, 3, 1);
             System.out.println(service.retornarDisponibilidade(y.getOnibus(), calendar.getTime(), "Palmas"));

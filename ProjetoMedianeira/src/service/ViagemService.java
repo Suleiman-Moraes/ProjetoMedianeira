@@ -13,7 +13,7 @@ public class ViagemService implements ICrudService<Viagem>{
 
     @Override
     public void salvar(Viagem t) throws SQLException {
-        if(!this.retornarDisponibilidade(t.getMotorista(), t.getDataSaida())) 
+        if(!this.retornarDisponibilidade(t.getMotorista(), t.getDataSaida(), t.getDe())) 
             throw new SQLException("Motorista Indisponivel.");
         if(!this.retornarDisponibilidade(t.getOnibus(), t.getDataSaida(), t.getDe())) 
             throw new SQLException("Ônibus Indisponivel.");
@@ -36,7 +36,8 @@ public class ViagemService implements ICrudService<Viagem>{
         return new ViagemDao().visualizarAll();
     }
     
-    public boolean retornarDisponibilidade(Motorista motorista, Date data) throws SQLException{
+    public boolean retornarDisponibilidade(Motorista motorista, Date data, String de) throws SQLException{
+        if(de != motorista.getLocalizacao()) return false;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(data);
         calendar.add(Calendar.DATE, -1);
