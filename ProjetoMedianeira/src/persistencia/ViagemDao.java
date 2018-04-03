@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,17 +16,23 @@ public class ViagemDao implements ICrudDao<Viagem> {
     public void inserir(Viagem t) throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "INSERT INTO viagem (data_saida, turno, de, ate, id, onibus, motorista) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO viagem (data_saida, turno, de, ate, onibus, motorista) VALUES (?,?,?,?,?,?)";
 
         PreparedStatement ps = con.prepareStatement(sql);
-        //ps.setString(1, t.getDataSaida());
+        ps.setDate(1, new java.sql.Date(t.getDataSaida().getTime()));
         ps.setBoolean(2, t.getTurno());
         ps.setString(3, t.getDe());
         ps.setString(4, t.getAte());
-        ps.setInt(5, t.getId());
-        ps.setString(6, t.getOnibus().getNumero());
-        ps.setInt(7, t.getMotorista().getId());
+        ps.setString(5, t.getOnibus().getNumero());
+        ps.setInt(6, t.getMotorista().getId());
         ps.execute();
+        
+        String sql2 = "SELECT currval('viagem_id_seq');";
+        Statement sta = con.createStatement();
+        ResultSet rs = sta.executeQuery(sql2);
+        while(rs.next()){
+            t.setId(rs.getInt(1));
+        }
     }
 
     @Override
@@ -41,17 +48,16 @@ public class ViagemDao implements ICrudDao<Viagem> {
     @Override
     public void alterar(Viagem t) throws SQLException {
         Connection con = util.Conexao.getConexao();
-        String sql = "UPDATE viagem SET data_saida=?, turno=?, de=?, ate=?, id=?, onibus=?, motorista=?, WHERE id=?;";
+        String sql = "UPDATE viagem SET data_saida=?, turno=?, de=?, ate=?, onibus=?, motorista=? WHERE id=?;";
 
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setDate(1, new java.sql.Date(t.getDataSaida().getTime()));
         ps.setBoolean(2, t.getTurno());
-        ps.setString(3, t.getAte());
         ps.setString(3, t.getDe());
         ps.setString(4, t.getAte());
-        ps.setInt(5, t.getId());
-        ps.setString(6, t.getOnibus().getNumero());
-        ps.setInt(7, t.getMotorista().getId());
+        ps.setInt(7, t.getId());
+        ps.setString(5, t.getOnibus().getNumero());
+        ps.setInt(6, t.getMotorista().getId());
         ps.execute();
     }
 
@@ -87,5 +93,18 @@ public class ViagemDao implements ICrudDao<Viagem> {
                     new MotoristaDao().visualizarUm(rs.getInt("motorista")), rs.getInt("id")));
         }
         return lista;
+    }
+    
+    public int consultaPassandoParametrosCOUNT(String consulta) throws SQLException{
+        Connection con = util.Conexao.getConexao();
+
+        String sql = "SELECT count(*) as qtde FROM viagem";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql + consulta);
+
+        while (rs.next()) {
+            return rs.getInt("qtde");
+        }
+        return 0;
     }
 }
