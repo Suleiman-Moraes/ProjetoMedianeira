@@ -10,9 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import model.Modelo;
+import model.Motorista;
 import model.Onibus;
 import model.Viagem;
+import service.MotoristaService;
+import service.OnibusService;
 import service.ViagemService;
 
 /**
@@ -41,11 +43,11 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
         this.preencherTela(viagem);
     }
     
-    public CadastroViagem(JDesktopPane principal, Viagem viagem, Modelo modelo) throws SQLException {
+    public CadastroViagem(JDesktopPane principal, Viagem viagem, Motorista motorista) throws SQLException {
         this();
         this.principal = principal;
         this.preencherTela(viagem);
-        this.preencherModelo(modelo);
+        this.preencherMotorista(motorista);
     }
     
     public CadastroViagem(JDesktopPane principal, Viagem viagem, Onibus onibus) throws SQLException {
@@ -81,6 +83,10 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBoxTurno = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        jTextFieldOnibus = new javax.swing.JTextField();
+        jButtonPesquisarOnibus = new javax.swing.JButton();
+        jTextFieldMotorista = new javax.swing.JTextField();
+        jButtonPesquisarMotorista = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
@@ -142,9 +148,9 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
 
         jComboBoxDe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jComboBoxDe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Goiânia", "Palmas" }));
-        jComboBoxDe.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jComboBoxDeKeyTyped(evt);
+        jComboBoxDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDeActionPerformed(evt);
             }
         });
 
@@ -154,7 +160,11 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Até");
 
-        jFormattedTextFieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        try {
+            jFormattedTextFieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Ônibus");
@@ -165,6 +175,28 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Turno");
 
+        jTextFieldOnibus.setEditable(false);
+        jTextFieldOnibus.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        jButtonPesquisarOnibus.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButtonPesquisarOnibus.setText("PESQUISAR");
+        jButtonPesquisarOnibus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarOnibusActionPerformed(evt);
+            }
+        });
+
+        jTextFieldMotorista.setEditable(false);
+        jTextFieldMotorista.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        jButtonPesquisarMotorista.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButtonPesquisarMotorista.setText("PESQUISAR");
+        jButtonPesquisarMotorista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarMotoristaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -173,45 +205,52 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonlLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextFieldIndentificador, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldIndentificador)
+                                        .addGap(46, 46, 46))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextFieldMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jComboBoxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButtonPesquisar))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jComboBoxDe, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jComboBoxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel7))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jTextFieldAte, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel5)))))
+                                        .addComponent(jLabel7))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButtonPesquisarOnibus)
+                                            .addComponent(jButtonPesquisar)
+                                            .addComponent(jButtonPesquisarMotorista)
+                                            .addComponent(jTextFieldAte, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)))
                                 .addGap(49, 49, 49))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jFormattedTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldOnibus, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxDe, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonlLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 15, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,29 +260,35 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jTextFieldIndentificador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPesquisar))
-                .addGap(29, 29, 29)
-                .addComponent(jLabel6)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextFieldOnibus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisarOnibus))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextFieldMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisarMotorista))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBoxDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldAte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jTextFieldAte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jFormattedTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonlLimpar)
                     .addComponent(jButtonFechar))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -269,18 +314,8 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
             this.validaCampos();
-            Viagem viagem = new Viagem();
+            Viagem viagem = printTela();
             
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            viagem.setDataSaida(format.parse(jFormattedTextFieldData.getText().trim()));
-            viagem.setDe((String) jComboBoxDe.getSelectedItem());
-            viagem.setAte(jTextFieldAte.getText().trim());
-            if(jComboBoxTurno.getSelectedIndex() == 1) viagem.setTurno(true);
-            else viagem.setTurno(false);
-
-            if(!jTextFieldIndentificador.getText().trim().equals(""))
-            viagem.setId(Integer.parseInt(jTextFieldIndentificador.getText().trim()));
-
             new ViagemService().salvar(viagem);
             JOptionPane.showMessageDialog(rootPane, "Dados Inseridos com sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             this.limparTela();
@@ -295,7 +330,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                 "VIAÇÃO NOSSA SENHORA DE MEDIANEIRA ltda", JOptionPane.YES_NO_OPTION);
 
             if (resposta == JOptionPane.YES_OPTION) {
-                new MotoristaService().deletar(Integer.parseInt(jTextFieldIndentificador.getText()));
+                new ViagemService().deletar(Integer.parseInt(jTextFieldIndentificador.getText()));
 
                 JOptionPane.showMessageDialog(rootPane, "Operação efetuada com sucesso!",
                     "Informação", JOptionPane.INFORMATION_MESSAGE);
@@ -325,8 +360,8 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
-            preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "motorista");
+            preencherTabela();
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -335,21 +370,65 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
-    private void jComboBoxDeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxDeKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxDeKeyTyped
+    private void jComboBoxDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDeActionPerformed
+        switch(jComboBoxDe.getSelectedIndex()){
+            case(1):{
+                jTextFieldAte.setText("Palmas");
+                break;
+            }
+            case(2):{
+                jTextFieldAte.setText("Goiânia");
+                break;
+            }
+            default:
+                jTextFieldAte.setText("");
+            break;
+        }
+    }//GEN-LAST:event_jComboBoxDeActionPerformed
+
+    private void jButtonPesquisarOnibusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarOnibusActionPerformed
+        try {
+            CadastroOnibus onibus = new CadastroOnibus();
+            onibus.preencherTabela();
+            TelaPesquisa tela = new TelaPesquisa(principal, onibus.getCabecalho(), 
+                    onibus.getDetalhe(), "viagem/onibus", this.printTela());
+            principal.add(tela);
+            tela.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonPesquisarOnibusActionPerformed
+
+    private void jButtonPesquisarMotoristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarMotoristaActionPerformed
+        try {
+            CadastroMotorista motorista = new CadastroMotorista();
+            motorista.preencherTabela();
+            TelaPesquisa tela = new TelaPesquisa(principal, motorista.getCabecalho(), 
+                    motorista.getDetalhe(), "viagem/motorista", this.printTela());
+            principal.add(tela);
+            tela.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonPesquisarMotoristaActionPerformed
 
     private void validaCampos() throws Exception{
         if(jFormattedTextFieldData.getText().trim().equals("")) 
             throw new Exception("Insira a Data de Saída");
         if(jComboBoxDe.getSelectedIndex() == 0) throw new Exception("Selecione o De.");
         if(jComboBoxTurno.getSelectedIndex() == 0) throw new Exception("Selecione o Turno.");
+        if(jTextFieldOnibus.getText().trim().equals("")) throw new Exception("Selecione o Ônibus.");
+        if(jTextFieldMotorista.getText().trim().equals("")) throw new Exception("Selecione o Motorista.");
     }
     
     private void limparTela() {
         try {
             jTextFieldIndentificador.setText("");
             jTextFieldAte.setText("");
+            jTextFieldOnibus.setText("");
+            jTextFieldMotorista.setText("");
             jFormattedTextFieldData.setText("");
             jComboBoxDe.setSelectedIndex(0);
             jComboBoxTurno.setSelectedIndex(0);
@@ -359,11 +438,127 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    private void preencherTela(Viagem viagem){
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            if(viagem.getId() > 0) jTextFieldIndentificador.setText(viagem.getId()+"");
+            if(viagem.getAte() != null) jTextFieldAte.setText(viagem.getAte());
+            if(viagem.getDataSaida() != null)
+                jFormattedTextFieldData.setText(format.format(viagem.getDataSaida()));
+            if(viagem.getDe() != null) jComboBoxDe.setSelectedItem(viagem.getDe());
+            if(viagem.getMotorista() != null)jTextFieldMotorista.setText(viagem.getMotorista().getId() + "");
+            if(viagem.getOnibus() != null)
+                jTextFieldOnibus.setText(viagem.getOnibus().getNumero());
+            if(viagem.getTurno()) jComboBoxTurno.setSelectedIndex(1);
+            else jComboBoxTurno.setSelectedIndex(2);
+            
+            jButtonExcluir.setEnabled(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private Viagem printTela(){
+        try {
+            Viagem viagem = new Viagem();
+            if(jFormattedTextFieldData.getText().trim().length() == 10){
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                viagem.setDataSaida(format.parse(jFormattedTextFieldData.getText().trim()));
+            }
+            if(jComboBoxDe.getSelectedIndex() != 0)
+                viagem.setDe((String) jComboBoxDe.getSelectedItem());
+            if(!jTextFieldAte.getText().trim().equals(""))
+                viagem.setAte(jTextFieldAte.getText().trim());
+            if(jComboBoxTurno.getSelectedIndex() == 1) viagem.setTurno(true);
+            else viagem.setTurno(false);
+            if(!jTextFieldMotorista.getText().trim().isEmpty())
+                viagem.setMotorista(new MotoristaService().visualizarUm(
+                    Integer.parseInt(jTextFieldMotorista.getText().trim())));
+            if(!jTextFieldOnibus.getText().trim().isEmpty())
+                viagem.setOnibus(new OnibusService().visualizarUm(jTextFieldOnibus.getText().trim()));
+            
+            if(!jTextFieldIndentificador.getText().trim().isEmpty())
+                viagem.setId(Integer.parseInt(jTextFieldIndentificador.getText().trim()));
+            
+            return viagem;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+    
+    private void preencherMotorista(Motorista motorista){
+        try {
+            jTextFieldMotorista.setText(motorista.getId() + "");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void preencherOnibus(Onibus onibus){
+        try {
+            jTextFieldOnibus.setText(onibus.getNumero());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void preencherTabela() {
+        try {
+            cabecalho = new Vector();
+            cabecalho.add("Indentificador");
+            cabecalho.add("Data de Saída");
+            cabecalho.add("De");
+            cabecalho.add("Até");
+            cabecalho.add("Turno");
+            cabecalho.add("Nome do Motorista");
+            cabecalho.add("Localização");
+            cabecalho.add("CNH");
+            cabecalho.add("Número do ônibus");
+            cabecalho.add("Ano");
+            cabecalho.add("Marca");
+            cabecalho.add("Modelo");
+            cabecalho.add("Geração");
+            cabecalho.add("Tipo");
+            cabecalho.add("Poltrona");
+            
+            detalhe = new Vector();
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            for(Viagem viagem : new ViagemService().visualizarAll()){
+                Vector<String> linha = new Vector();
+                
+                linha.add(viagem.getId() + "");
+                linha.add(format.format(viagem.getDataSaida()));
+                linha.add(viagem.getDe());
+                linha.add(viagem.getAte());
+                if(viagem.getTurno())
+                    linha.add("Manhã");
+                else linha.add("Noite");
+                linha.add(viagem.getMotorista().getNome());
+                linha.add(viagem.getMotorista().getLocalizacao());
+                linha.add(viagem.getMotorista().getCnh());
+                linha.add(viagem.getOnibus().getNumero()+ "");
+                linha.add(viagem.getOnibus().getAno());
+                linha.add(viagem.getOnibus().getModelo().getMarca());
+                linha.add(viagem.getOnibus().getModelo().getModelo());
+                linha.add(viagem.getOnibus().getModelo().getGeracao());
+                linha.add(viagem.getOnibus().getModelo().getTipo());
+                linha.add(viagem.getOnibus().getModelo().getPoltrona() + "");
+                
+                detalhe.add(linha);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }   
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonPesquisar;
+    private javax.swing.JButton jButtonPesquisarMotorista;
+    private javax.swing.JButton jButtonPesquisarOnibus;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonlLimpar;
     private javax.swing.JComboBox<String> jComboBoxDe;
@@ -379,5 +574,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextFieldAte;
     private javax.swing.JTextField jTextFieldIndentificador;
+    private javax.swing.JTextField jTextFieldMotorista;
+    private javax.swing.JTextField jTextFieldOnibus;
     // End of variables declaration//GEN-END:variables
 }

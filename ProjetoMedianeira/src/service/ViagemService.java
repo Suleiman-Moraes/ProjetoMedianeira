@@ -37,7 +37,7 @@ public class ViagemService implements ICrudService<Viagem>{
     }
     
     public boolean retornarDisponibilidade(Motorista motorista, Date data, String de) throws SQLException{
-        if(de != motorista.getLocalizacao()) return false;
+        if(!de.equals(motorista.getLocalizacao())) return false;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(data);
         calendar.add(Calendar.DATE, -1);

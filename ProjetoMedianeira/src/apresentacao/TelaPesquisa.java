@@ -8,15 +8,19 @@ import javax.swing.table.DefaultTableModel;
 import model.Modelo;
 import model.Motorista;
 import model.Onibus;
+import model.Viagem;
 import service.ModeloService;
 import service.MotoristaService;
 import service.OnibusService;
+import service.ViagemService;
 
 public class TelaPesquisa extends javax.swing.JInternalFrame {
     
     private JDesktopPane principal;
     private String chamada;
     private Onibus onibus;
+    private Motorista motorista;
+    private Viagem viagem;
     
     public TelaPesquisa() {
         initComponents();
@@ -32,6 +36,22 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Onibus onibus) {
         this();
         this.onibus = onibus;
+        this.chamada = chamada;
+        this.principal = principal;
+        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
+    }
+    
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Motorista motorista) {
+        this();
+        this.motorista = motorista;
+        this.chamada = chamada;
+        this.principal = principal;
+        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
+    }
+    
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Viagem viagem) {
+        this();
+        this.viagem = viagem;
         this.chamada = chamada;
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
@@ -127,17 +147,30 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
         try {
             JInternalFrame tela = null;
-            if(chamada == "motorista"){
-                tela = new CadastroMotorista(principal);
-            }
-            else if(chamada == "modelo"){
-                tela = new CadastroModelo(principal);
-            }
-            else if(chamada == "onibus"){
-                tela = new CadastroOnibus(principal);
-            }
-            else if(chamada == "onibus/modelo"){
-                tela = new CadastroOnibus(principal);
+            if(null != chamada)switch (chamada) {
+                case "motorista":
+                    tela = new CadastroMotorista(principal);
+                    break;
+                case "modelo":
+                    tela = new CadastroModelo(principal);
+                    break;
+                case "onibus":
+                    tela = new CadastroOnibus(principal);
+                    break;
+                case "onibus/modelo":
+                    tela = new CadastroOnibus(principal);
+                    break;
+                case "viagem/motorista":
+                    tela = new CadastroViagem(principal);
+                    break;
+                case "viagem/onibus":
+                    tela = new CadastroViagem(principal);
+                    break;
+                case "viagem":
+                    tela = new CadastroViagem(principal);
+                    break;
+                default:
+                    break;
             }
             principal.add(tela);
             tela.setVisible(true);
@@ -171,6 +204,21 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Modelo modelo = new ModeloService().visualizarUm(Integer.parseInt(codigo));
                 tela = new CadastroOnibus(principal, onibus, modelo);
+            }
+            else if(chamada == "viagem/onibus"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Onibus onibus = new OnibusService().visualizarUm(codigo);
+                tela = new CadastroViagem(principal, viagem, onibus);
+            }
+            else if(chamada == "viagem/motorista"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Motorista motorista = new MotoristaService().visualizarUm(Integer.parseInt(codigo));
+                tela = new CadastroViagem(principal, viagem, motorista);
+            }
+            else if(chamada == "viagem"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Viagem viagem = new ViagemService().visualizarUm(Integer.parseInt(codigo));
+                tela = new CadastroViagem(principal, viagem);
             }
             principal.add(tela);
             tela.setVisible(true);

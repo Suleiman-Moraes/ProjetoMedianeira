@@ -308,8 +308,8 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
-            preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "onibus");
+            preencherTabela();
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "onibus");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -411,16 +411,16 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
         }
     }
     
-    private void preencherTela() {
+    public void preencherTabela() {
         try {
             cabecalho = new Vector();
-            cabecalho.add("Indentificador");
-            cabecalho.add("Ano");
-            cabecalho.add("Marca");
-            cabecalho.add("Modelo");
-            cabecalho.add("Geração");
-            cabecalho.add("Tipo");
-            cabecalho.add("Poltrona");
+            getCabecalho().add("Indentificador");
+            getCabecalho().add("Ano");
+            getCabecalho().add("Marca");
+            getCabecalho().add("Modelo");
+            getCabecalho().add("Geração");
+            getCabecalho().add("Tipo");
+            getCabecalho().add("Poltrona");
             
             detalhe = new Vector();
             for(Onibus onibus : new OnibusService().visualizarAll()){
@@ -434,7 +434,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
                 linha.add(onibus.getModelo().getTipo());
                 linha.add(onibus.getModelo().getPoltrona() + "");
                 
-                detalhe.add(linha);
+                getDetalhe().add(linha);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -458,4 +458,12 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldIndentificador;
     private javax.swing.JTextField jTextFieldModelo;
     // End of variables declaration//GEN-END:variables
+
+    public Vector<String> getCabecalho() {
+        return cabecalho;
+    }
+
+    public Vector getDetalhe() {
+        return detalhe;
+    }
 }

@@ -262,8 +262,8 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
-            preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "motorista");
+            preencherTabela();
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "motorista");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -313,13 +313,13 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         }
     }
     
-    private void preencherTela() {
+    public void preencherTabela() {
         try {
             cabecalho = new Vector();
-            cabecalho.add("Indentificador");
-            cabecalho.add("Nome");
-            cabecalho.add("Localização");
-            cabecalho.add("CNH");
+            getCabecalho().add("Indentificador");
+            getCabecalho().add("Nome");
+            getCabecalho().add("Localização");
+            getCabecalho().add("CNH");
             
             detalhe = new Vector();
             for(Motorista tipo : new MotoristaService().visualizarAll()){
@@ -329,7 +329,7 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
                 linha.add(tipo.getNome());
                 linha.add(tipo.getLocalizacao());
                 linha.add(tipo.getCnh());
-                detalhe.add(linha);
+                getDetalhe().add(linha);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -352,4 +352,12 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldIndentificador;
     private javax.swing.JTextField jTextFieldNome;
     // End of variables declaration//GEN-END:variables
+
+    public Vector<String> getCabecalho() {
+        return cabecalho;
+    }
+
+    public Vector getDetalhe() {
+        return detalhe;
+    }
 }

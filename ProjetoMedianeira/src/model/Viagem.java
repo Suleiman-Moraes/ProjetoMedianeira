@@ -2,8 +2,6 @@ package model;
 
 import java.util.Date;
 
-
-
 public class Viagem {
     //Atributos
     protected Date dataSaida;
