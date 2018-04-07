@@ -74,7 +74,7 @@ public class MotoristaDao implements ICrudDao<Motorista>{
     public List<Motorista> visualizarAll() throws SQLException {
         Connection con = util.Conexao.getConexao();
         
-        String sql = "SELECT * FROM motorista ORDER BY nome;";
+        String sql = "SELECT * FROM motorista ORDER BY id;";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         
