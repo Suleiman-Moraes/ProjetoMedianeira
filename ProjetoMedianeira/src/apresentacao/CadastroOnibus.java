@@ -374,9 +374,9 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     
     private void preencherTela(Onibus onibus){
         try {
-            jTextFieldAno.setText(onibus.getAno());
-            jTextFieldIndentificador.setText(onibus.getNumero());
-            jTextFieldModelo.setText(onibus.getModelo().getId() + "");
+            if(onibus.getAno() != null) jTextFieldAno.setText(onibus.getAno());
+            if(onibus.getNumero() != null) jTextFieldIndentificador.setText(onibus.getNumero());
+            if(onibus.getModelo() != null) jTextFieldModelo.setText(onibus.getModelo().getId() + "");
             jLabelDisponibilidade.setText("Existe");
             
             jButtonExcluir.setEnabled(true);
