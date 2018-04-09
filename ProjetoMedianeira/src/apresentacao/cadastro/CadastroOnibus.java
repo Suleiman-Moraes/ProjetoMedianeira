@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package apresentacao;
+package apresentacao.cadastro;
 
+import apresentacao.TelaPesquisa;
+import apresentacao.cadastro.CadastroModelo;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JDesktopPane;

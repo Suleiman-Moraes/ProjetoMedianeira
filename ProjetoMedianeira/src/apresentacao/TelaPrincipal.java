@@ -1,5 +1,10 @@
 package apresentacao;
 
+import apresentacao.telafundo.FundoTela;
+import apresentacao.cadastro.CadastroViagem;
+import apresentacao.cadastro.CadastroOnibus;
+import apresentacao.cadastro.CadastroMotorista;
+import apresentacao.cadastro.CadastroModelo;
 import java.awt.GridLayout;
 import java.io.File;
 import javax.swing.JOptionPane;
@@ -13,8 +18,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
 //        this.jDesktopPane1.setLayout(new GridLayout());
         setLayout(new GridLayout());
-        tela = new FundoTela
-        (new File("src\\apresentacao\\g6-paradiso-1550-ld-o400-rsd-Medianeira.PNG").getAbsolutePath());
+        tela = new FundoTela 
+        (new File("src\\apresentacao\\telafundo\\g6-paradiso-1550-ld-o400-rsd-Medianeira.PNG").getAbsolutePath());
         getContentPane().add(tela);
                 
     }

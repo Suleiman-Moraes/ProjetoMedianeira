@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package apresentacao;
+package apresentacao.cadastro;
 
+import apresentacao.TelaPesquisa;
+import apresentacao.cadastro.CadastroOnibus;
+import apresentacao.cadastro.CadastroMotorista;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;

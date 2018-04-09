@@ -1,4 +1,4 @@
-package apresentacao;
+package apresentacao.telafundo;
 
 import java.awt.Graphics;
 import java.awt.Image;

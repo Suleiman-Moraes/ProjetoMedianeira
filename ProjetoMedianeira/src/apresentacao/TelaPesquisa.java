@@ -1,5 +1,9 @@
 package apresentacao;
 
+import apresentacao.cadastro.CadastroViagem;
+import apresentacao.cadastro.CadastroOnibus;
+import apresentacao.cadastro.CadastroMotorista;
+import apresentacao.cadastro.CadastroModelo;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
