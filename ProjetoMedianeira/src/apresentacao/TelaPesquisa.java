@@ -162,13 +162,13 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                     tela = new CadastroOnibus(principal);
                     break;
                 case "onibus/modelo":
-                    tela = new CadastroOnibus(principal);
+                    tela = new CadastroOnibus(principal, onibus);
                     break;
                 case "viagem/motorista":
-                    tela = new CadastroViagem(principal);
+                    tela = new CadastroViagem(principal, viagem);
                     break;
                 case "viagem/onibus":
-                    tela = new CadastroViagem(principal);
+                    tela = new CadastroViagem(principal, viagem);
                     break;
                 case "viagem":
                     tela = new CadastroViagem(principal);
