@@ -54,11 +54,9 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         jTextFieldCnh = new javax.swing.JTextField();
         jComboBoxLocalizacao = new javax.swing.JComboBox<>();
 
-        setClosable(true);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Indentificador");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
