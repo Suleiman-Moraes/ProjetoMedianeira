@@ -84,13 +84,13 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Indentificador");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Código");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Ano");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Modelo");
 
         jButtonSalvar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -416,7 +416,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     public void preencherTabela() {
         try {
             cabecalho = new Vector();
-            getCabecalho().add("Indentificador");
+            getCabecalho().add("Código");
             getCabecalho().add("Ano");
             getCabecalho().add("Marca");
             getCabecalho().add("Modelo");

@@ -57,15 +57,15 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Indentificador");
+        jLabel1.setText("Código");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Nome");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Localização");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("CNH");
 
         jButtonSalvar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -121,8 +121,13 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBoxLocalizacao.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBoxLocalizacao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxLocalizacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Goiânia", "Palmas" }));
+        jComboBoxLocalizacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxLocalizacaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -182,7 +187,7 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonlLimpar)
                     .addComponent(jButtonFechar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -278,6 +283,10 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldCnhKeyTyped
+
+    private void jComboBoxLocalizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLocalizacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxLocalizacaoActionPerformed
     
     private void preencherTela(Motorista mot){
         try {
@@ -314,7 +323,7 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     public void preencherTabela() {
         try {
             cabecalho = new Vector();
-            getCabecalho().add("Indentificador");
+            getCabecalho().add("Código");
             getCabecalho().add("Nome");
             getCabecalho().add("Localização");
             getCabecalho().add("CNH");

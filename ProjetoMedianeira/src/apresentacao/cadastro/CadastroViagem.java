@@ -93,16 +93,16 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Indentificador");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Código");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Data de Saída");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("De");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Motorista");
 
         jButtonSalvar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -149,7 +149,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBoxDe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBoxDe.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxDe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Goiânia", "Palmas" }));
         jComboBoxDe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,7 +160,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
         jTextFieldAte.setEditable(false);
         jTextFieldAte.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Até");
 
         try {
@@ -169,13 +169,13 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Ônibus");
 
-        jComboBoxTurno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBoxTurno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Manhã", "Noite" }));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Turno");
 
         jTextFieldOnibus.setEditable(false);
@@ -253,7 +253,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                         .addComponent(jButtonlLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 15, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,7 +510,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     public void preencherTabela() {
         try {
             cabecalho = new Vector();
-            cabecalho.add("Indentificador");
+            cabecalho.add("Código");
             cabecalho.add("Data de Saída");
             cabecalho.add("De");
             cabecalho.add("Até");
