@@ -75,8 +75,6 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jButtonFechar = new javax.swing.JButton();
 
-        setClosable(true);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
