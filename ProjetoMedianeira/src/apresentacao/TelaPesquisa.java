@@ -159,12 +159,6 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 case "onibus":
                     tela = new CadastroOnibus(principal);
                     break;
-                case "viagem/motorista":
-                    tela = new CadastroViagem(principal, viagem);
-                    break;
-                case "viagem/onibus":
-                    tela = new CadastroViagem(principal, viagem);
-                    break;
                 case "viagem":
                     tela = new CadastroViagem(principal);
                     break;
@@ -198,16 +192,6 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Onibus onibus = new OnibusService().visualizarUm(codigo);
                 tela = new CadastroOnibus(principal, onibus);
-            }
-            else if(chamada == "viagem/onibus"){
-                String codigo = jTable1.getValueAt(linha, 0).toString();
-                Onibus onibus = new OnibusService().visualizarUm(codigo);
-                tela = new CadastroViagem(principal, viagem, onibus);
-            }
-            else if(chamada == "viagem/motorista"){
-                String codigo = jTable1.getValueAt(linha, 0).toString();
-                Motorista motorista = new MotoristaService().visualizarUm(Integer.parseInt(codigo));
-                tela = new CadastroViagem(principal, viagem, motorista);
             }
             else if(chamada == "viagem"){
                 String codigo = jTable1.getValueAt(linha, 0).toString();

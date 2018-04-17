@@ -66,7 +66,7 @@ public class Modelo {
         this.id = id;
     }
     
-     @Override
+    @Override
     public String toString() {
         return marca + " " + geracao + " " + modelo + " " + tipo;
     }

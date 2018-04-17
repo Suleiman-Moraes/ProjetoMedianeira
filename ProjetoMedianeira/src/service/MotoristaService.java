@@ -43,4 +43,8 @@ public class MotoristaService implements ICrudService<Motorista>{
         if(!cnh.equals(t.getCnh()) && buscarMotoristaComMesmaCNH(cnh))
             throw new Exception("CNH Já Existente.");
     }
+    
+    public List<Motorista> buscarMotoristaPassandoCidade(String local) throws SQLException {
+        return new MotoristaDao().buscarMotoristaPassandoCidade(local);
+    }
 }

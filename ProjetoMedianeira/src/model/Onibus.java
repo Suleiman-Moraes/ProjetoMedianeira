@@ -1,4 +1,7 @@
 package model;
+
+import java.util.Objects;
+
 public class Onibus {
     //Atributos
     private String numero;
@@ -36,5 +39,35 @@ public class Onibus {
     }
     public void setModelo(Modelo modelo) {
         this.modelo = new Modelo(modelo);
+    }
+    
+    @Override
+    public String toString() {
+        return numero +" "+ modelo.getMarca() + " " + modelo.getGeracao() + " " + modelo.getPoltrona() + " Lugares";
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.numero);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Onibus other = (Onibus) obj;
+        if (!Objects.equals(this.numero, other.numero)) {
+            return false;
+        }
+        return true;
     }
 }

@@ -85,6 +85,21 @@ public class MotoristaDao implements ICrudDao<Motorista>{
         return lista;
     }
     
+    public List<Motorista> buscarMotoristaPassandoCidade(String local) throws SQLException {
+        Connection con = util.Conexao.getConexao();
+        
+        String sql = "SELECT * FROM motorista WHERE localizacao=? ORDER BY id;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, local);
+        ResultSet rs = ps.executeQuery();
+        
+        List<Motorista> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(new Motorista(rs.getString("nome"), rs.getString("localizacao"), rs.getString("cnh"), rs.getInt("id")));
+        }
+        return lista;
+    }
+    
     public int buscarMotoristaComMesmaCNH(String cnh) throws SQLException{
         Connection con = util.Conexao.getConexao();
         
