@@ -65,4 +65,34 @@ public class Modelo {
     public void setId(int id) {
         this.id = id;
     }
+    
+     @Override
+    public String toString() {
+        return marca + " " + geracao + " " + modelo + " " + tipo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Modelo other = (Modelo) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
 }

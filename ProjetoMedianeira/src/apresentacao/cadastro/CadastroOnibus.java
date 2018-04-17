@@ -6,9 +6,10 @@
 package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
-import apresentacao.cadastro.CadastroModelo;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import model.Modelo;
@@ -29,6 +30,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     
     public CadastroOnibus() {
         initComponents();
+        jComboBoxModelo.setModel(preencherComboModelo());
     }
     public CadastroOnibus(JDesktopPane principal) {
         this();
@@ -40,19 +42,6 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
         this.principal = principal;
         this.onibus = onibus;
         this.preencherTela(onibus);
-    }
-    
-    public CadastroOnibus(JDesktopPane principal, Modelo modelo) throws SQLException {
-        this();
-        this.principal = principal;
-        this.preencherModelo(modelo);
-    }
-    
-    public CadastroOnibus(JDesktopPane principal, Onibus onibus, Modelo modelo) throws SQLException {
-        this();
-        this.principal = principal;
-        this.preencherTela(onibus);
-        this.preencherModelo(modelo);
     }
 
     /**
@@ -75,10 +64,9 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
         jTextFieldIndentificador = new javax.swing.JTextField();
         jButtonPesquisar = new javax.swing.JButton();
         jTextFieldAno = new javax.swing.JTextField();
-        jTextFieldModelo = new javax.swing.JTextField();
         jButtonVerificar = new javax.swing.JButton();
         jLabelDisponibilidade = new javax.swing.JLabel();
-        jButtonPesquisarModelo = new javax.swing.JButton();
+        jComboBoxModelo = new javax.swing.JComboBox<>();
 
         setTitle("Cadastro Ônibus");
 
@@ -148,9 +136,6 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextFieldModelo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextFieldModelo.setEnabled(false);
-
         jButtonVerificar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButtonVerificar.setText("VERIFICAR");
         jButtonVerificar.addActionListener(new java.awt.event.ActionListener() {
@@ -161,13 +146,8 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
 
         jLabelDisponibilidade.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
 
-        jButtonPesquisarModelo.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButtonPesquisarModelo.setText("PESQUISAR");
-        jButtonPesquisarModelo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPesquisarModeloActionPerformed(evt);
-            }
-        });
+        jComboBoxModelo.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jComboBoxModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECIONE" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -182,22 +162,17 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxModelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextFieldIndentificador, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButtonPesquisar))
-                                    .addComponent(jTextFieldAno))
+                                .addComponent(jTextFieldIndentificador, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonVerificar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabelDisponibilidade))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonPesquisarModelo)))
+                                .addComponent(jButtonPesquisar))
+                            .addComponent(jTextFieldAno))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonVerificar)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabelDisponibilidade)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,16 +200,15 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
                     .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jButtonPesquisarModelo))
+                    .addComponent(jComboBoxModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonlLimpar)
                     .addComponent(jButtonFechar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,8 +237,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
             Onibus onibus = new Onibus();
             onibus.setAno(jTextFieldAno.getText());
             onibus.setNumero(jTextFieldIndentificador.getText());
-            onibus.setModelo(new ModeloService().visualizarUm(
-                Integer.parseInt(jTextFieldModelo.getText().trim())));
+            onibus.setModelo((Modelo) jComboBoxModelo.getSelectedItem());
             
             new OnibusService().salvar(onibus);
             JOptionPane.showMessageDialog(rootPane, "Dados Inseridos com sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
@@ -320,20 +293,6 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
-    private void jButtonPesquisarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarModeloActionPerformed
-        try {
-            CadastroModelo modelo = new CadastroModelo();
-            modelo.preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, modelo.getCabecalho(), 
-                    modelo.getDetalhe(), "onibus/modelo", this.printTela());
-            principal.add(tela);
-            tela.setVisible(true);
-            this.dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButtonPesquisarModeloActionPerformed
-
     private void jButtonVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerificarActionPerformed
         try {
             if(jTextFieldIndentificador.getText().trim().equals("")) throw new Exception("Informe o Número.");
@@ -368,8 +327,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
             onibus.setAno(jTextFieldAno.getText());
         if(!jTextFieldIndentificador.getText().trim().equals(""))
             onibus.setNumero(jTextFieldIndentificador.getText());
-        if(!jTextFieldModelo.getText().trim().equals(""))onibus.setModelo(new ModeloService().visualizarUm(
-            Integer.parseInt(jTextFieldModelo.getText().trim())));
+        onibus.setModelo((Modelo) jComboBoxModelo.getSelectedItem());
         
         return onibus;
     }
@@ -378,7 +336,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
         try {
             if(onibus.getAno() != null) jTextFieldAno.setText(onibus.getAno());
             if(onibus.getNumero() != null) jTextFieldIndentificador.setText(onibus.getNumero());
-            if(onibus.getModelo() != null) jTextFieldModelo.setText(onibus.getModelo().getId() + "");
+            if(onibus.getModelo() != null) jComboBoxModelo.setSelectedItem(onibus.getModelo());
             jLabelDisponibilidade.setText("Existe");
             
             jButtonExcluir.setEnabled(true);
@@ -387,29 +345,32 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
         }
     }
     
-    private void preencherModelo(Modelo modelo){
-        try {
-            jTextFieldModelo.setText(modelo.getId() + "");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
     private void validaCampos() throws Exception{
         if(jTextFieldIndentificador.getText().trim().equals("")) throw new Exception("Insira o Número.");
         if(jTextFieldAno.getText().trim().equals("")) throw new Exception("Insira o Ano.");
-        if(jTextFieldModelo.getText().trim().equals("")) throw new Exception("Insira o Modelo.");
     }
     private void limparTela(){
         try {
             jTextFieldIndentificador.setText("");
             jTextFieldAno.setText("");
-            jTextFieldModelo.setText("");
             jLabelDisponibilidade.setText("");
             
             jButtonExcluir.setEnabled(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public DefaultComboBoxModel preencherComboModelo(){
+        try {
+            List<Modelo> lista = new ModeloService().visualizarAll();
+            Vector veto = new Vector(lista);
+            
+            DefaultComboBoxModel<String> itens = new DefaultComboBoxModel<>(veto);
+            return itens;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            return null;
         }
     }
     
@@ -447,10 +408,10 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonPesquisar;
-    private javax.swing.JButton jButtonPesquisarModelo;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonVerificar;
     private javax.swing.JButton jButtonlLimpar;
+    private javax.swing.JComboBox<String> jComboBoxModelo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -458,7 +419,6 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextFieldAno;
     private javax.swing.JTextField jTextFieldIndentificador;
-    private javax.swing.JTextField jTextFieldModelo;
     // End of variables declaration//GEN-END:variables
 
     public Vector<String> getCabecalho() {
