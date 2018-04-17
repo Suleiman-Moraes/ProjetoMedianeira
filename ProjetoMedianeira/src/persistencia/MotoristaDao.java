@@ -84,4 +84,32 @@ public class MotoristaDao implements ICrudDao<Motorista>{
         }
         return lista;
     }
+    
+    public int buscarMotoristaComMesmaCNH(String cnh) throws SQLException{
+        Connection con = util.Conexao.getConexao();
+        
+        String sql = "SELECT COUNT(cnh) as qtde FROM motorista WHERE cnh=?;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, cnh);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            return rs.getInt("qtde");
+        }
+        return 0;
+    }
+    
+    public String buscarCnhPassandoId(int id) throws SQLException{
+        Connection con = util.Conexao.getConexao();
+        
+        String sql = "SELECT cnh FROM motorista WHERE id=?;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            return rs.getString("cnh");
+        }
+        return "";
+    }
 }

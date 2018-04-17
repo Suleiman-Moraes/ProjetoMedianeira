@@ -8,7 +8,7 @@ import persistencia.OnibusDao;
 public class OnibusService implements ICrudService<Onibus>{
 
     @Override
-    public void salvar(Onibus t) throws SQLException {
+    public void salvar(Onibus t) throws Exception {
         if(new OnibusDao().existe(t.getNumero())) new OnibusDao().alterar(t);
         else new OnibusDao().inserir(t);
     }

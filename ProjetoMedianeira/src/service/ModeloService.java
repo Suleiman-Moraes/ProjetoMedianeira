@@ -8,7 +8,7 @@ import persistencia.ModeloDao;
 public class ModeloService implements ICrudService<Modelo>{
 
     @Override
-    public void salvar(Modelo t) throws SQLException {
+    public void salvar(Modelo t) throws Exception {
         if(t.getId() != 0) new ModeloDao().alterar(t);
         else new ModeloDao().inserir(t);
     }

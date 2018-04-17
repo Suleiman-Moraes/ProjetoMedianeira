@@ -8,9 +8,15 @@ import persistencia.MotoristaDao;
 public class MotoristaService implements ICrudService<Motorista>{
 
     @Override
-    public void salvar(Motorista t) throws SQLException {
-        if(t.getId() != 0) new MotoristaDao().alterar(t);
-        else new MotoristaDao().inserir(t);
+    public void salvar(Motorista t) throws Exception {
+        if(t.getId() != 0){
+            validaCnhParaAlteracao(t);
+            new MotoristaDao().alterar(t);
+        }
+        else{
+            if(buscarMotoristaComMesmaCNH(t.getCnh())) throw new Exception("CNH Já Existente.");
+            new MotoristaDao().inserir(t);
+        }
     }
 
     @Override
@@ -28,4 +34,13 @@ public class MotoristaService implements ICrudService<Motorista>{
         return new MotoristaDao().visualizarAll();
     }
     
+    public boolean buscarMotoristaComMesmaCNH(String cnh) throws SQLException{
+        return new MotoristaDao().buscarMotoristaComMesmaCNH(cnh) > 0;
+    }
+    
+    public void validaCnhParaAlteracao(Motorista t) throws Exception{
+        String cnh = new MotoristaDao().buscarCnhPassandoId(t.getId());
+        if(!cnh.equals(t.getCnh()) && buscarMotoristaComMesmaCNH(cnh))
+            throw new Exception("CNH Já Existente.");
+    }
 }
