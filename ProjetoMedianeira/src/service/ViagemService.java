@@ -102,18 +102,18 @@ public class ViagemService implements ICrudService<Viagem> {
     }
 
     public boolean isDateValid(java.util.Date strDate) {
-        String dateFormat = "dd/MM/uuuu";
+        String dateFormat = "dd/MM/yyyy";
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String data = format.format(strDate);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter
                 .ofPattern(dateFormat)
                 .withResolverStyle(ResolverStyle.STRICT);
         try {
-            LocalDate date = LocalDate.parse(data, dateTimeFormatter);
-            if (strDate.compareTo(new Date(System.currentTimeMillis())) > 0) {
-                return true;
+            if (strDate.compareTo(new Date(System.currentTimeMillis())) <= 0) {
+                return false;
             }
-            return false;
+            LocalDate date = LocalDate.parse(data, dateTimeFormatter);
+            return true;
         } catch (DateTimeParseException e) {
             return false;
         }
