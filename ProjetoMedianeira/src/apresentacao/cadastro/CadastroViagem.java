@@ -6,21 +6,16 @@
 package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
-import apresentacao.cadastro.CadastroOnibus;
-import apresentacao.cadastro.CadastroMotorista;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import model.Modelo;
 import model.Motorista;
 import model.Onibus;
 import model.Viagem;
-import service.ModeloService;
 import service.MotoristaService;
 import service.OnibusService;
 import service.ViagemService;
@@ -81,6 +76,8 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jComboBoxOnibus = new javax.swing.JComboBox<>();
         jComboBoxMotorista = new javax.swing.JComboBox<>();
+
+        setTitle("Cadastro Viagem");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
