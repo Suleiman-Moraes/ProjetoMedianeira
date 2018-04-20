@@ -398,6 +398,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             throw new Exception("Insira a Data de Saída");
         if(jComboBoxDe.getSelectedIndex() == 0) throw new Exception("Selecione o De.");
         if(jComboBoxTurno.getSelectedIndex() == 0) throw new Exception("Selecione o Turno.");
+        if(jTextFieldValor.getText().trim().equals("")) throw new Exception("Insira o Valor.");
     }
     
     private void limparTela() {
@@ -407,6 +408,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             jFormattedTextFieldData.setText("");
             jComboBoxDe.setSelectedIndex(0);
             jComboBoxTurno.setSelectedIndex(0);
+            jTextFieldValor.setText("");
             
             jButtonExcluir.setEnabled(false);
         } catch (Exception e) {
@@ -428,6 +430,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                 jComboBoxOnibus.setSelectedItem(viagem.getOnibus());
             if(viagem.getTurno()) jComboBoxTurno.setSelectedIndex(1);
             else jComboBoxTurno.setSelectedIndex(2);
+            if(viagem.getValor()> 0) jTextFieldValor.setText(viagem.getValor()+"");
             
             jButtonExcluir.setEnabled(true);
         } catch (Exception e) {
@@ -454,6 +457,8 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             
             if(!jTextFieldIndentificador.getText().trim().isEmpty())
                 viagem.setId(Integer.parseInt(jTextFieldIndentificador.getText().trim()));
+            if(!jTextFieldValor.getText().trim().isEmpty())
+                viagem.setValor(Integer.parseInt(jTextFieldValor.getText().trim()));
             
             return viagem;
         } catch (Exception e) {
@@ -509,6 +514,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             cabecalho.add("De");
             cabecalho.add("Até");
             cabecalho.add("Turno");
+            cabecalho.add("Valor");
             cabecalho.add("Nome do Motorista");
             cabecalho.add("Localização");
             cabecalho.add("CNH");
@@ -532,6 +538,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                 if(viagem.getTurno())
                     linha.add("Manhã");
                 else linha.add("Noite");
+                linha.add(viagem.getValor()+ "");
                 linha.add(viagem.getMotorista().getNome());
                 linha.add(viagem.getMotorista().getLocalizacao());
                 linha.add(viagem.getMotorista().getCnh());
