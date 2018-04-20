@@ -16,7 +16,7 @@ public class ViagemDao implements ICrudDao<Viagem> {
     public void inserir(Viagem t) throws SQLException {
         Connection con = util.Conexao.getConexao();
 
-        String sql = "INSERT INTO viagem (data_saida, turno, de, ate, onibus, motorista) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO viagem (data_saida, turno, de, ate, onibus, motorista, valor) VALUES (?,?,?,?,?,?,?)";
 
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setDate(1, new java.sql.Date(t.getDataSaida().getTime()));
@@ -25,6 +25,7 @@ public class ViagemDao implements ICrudDao<Viagem> {
         ps.setString(4, t.getAte());
         ps.setString(5, t.getOnibus().getNumero());
         ps.setInt(6, t.getMotorista().getId());
+        ps.setDouble(7,  t.getValor());
         ps.execute();
         
         String sql2 = "SELECT currval('viagem_id_seq');";
@@ -48,16 +49,17 @@ public class ViagemDao implements ICrudDao<Viagem> {
     @Override
     public void alterar(Viagem t) throws SQLException {
         Connection con = util.Conexao.getConexao();
-        String sql = "UPDATE viagem SET data_saida=?, turno=?, de=?, ate=?, onibus=?, motorista=? WHERE id=?;";
+        String sql = "UPDATE viagem SET data_saida=?, turno=?, de=?, ate=?, onibus=?, motorista=?, valor=? WHERE id=?;";
 
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setDate(1, new java.sql.Date(t.getDataSaida().getTime()));
         ps.setBoolean(2, t.getTurno());
         ps.setString(3, t.getDe());
         ps.setString(4, t.getAte());
-        ps.setInt(7, t.getId());
+        ps.setInt(8, t.getId());
         ps.setString(5, t.getOnibus().getNumero());
         ps.setInt(6, t.getMotorista().getId());
+        ps.setDouble(7, t.getValor());
         ps.execute();
     }
 
@@ -73,7 +75,8 @@ public class ViagemDao implements ICrudDao<Viagem> {
         while (rs.next()) {
             return new Viagem(new Date(rs.getDate("data_saida").getTime()), rs.getBoolean("turno"), rs.getString("de"), rs.getString("ate"),
                     new OnibusDao().visualizarUm(rs.getString("onibus")),
-                    new MotoristaDao().visualizarUm(rs.getInt("motorista")), rs.getInt("id"));
+                    new MotoristaDao().visualizarUm(rs.getInt("motorista")),
+                    rs.getInt("id"), (float) rs.getDouble("valor"));
         }
         return null;
     }
@@ -88,9 +91,10 @@ public class ViagemDao implements ICrudDao<Viagem> {
 
         List<Viagem> lista = new ArrayList<>();
         while (rs.next()) {
-            lista.add(new Viagem(new Date(rs.getDate("data_saida").getTime()), rs.getBoolean("turno"), rs.getString("de"), rs.getString("ate"),
+            lista.add(new Viagem(new Date(rs.getDate("data_saida").getTime()), rs.getBoolean("turno"), rs.getString("de"), rs.getString("ate"), 
                     new OnibusDao().visualizarUm(rs.getString("onibus")),
-                    new MotoristaDao().visualizarUm(rs.getInt("motorista")), rs.getInt("id")));
+                    new MotoristaDao().visualizarUm(rs.getInt("motorista")), rs.getInt("id"),
+                    (float) rs.getDouble("valor")));
         }
         return lista;
     }
