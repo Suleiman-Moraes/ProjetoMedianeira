@@ -458,7 +458,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
             if(!jTextFieldIndentificador.getText().trim().isEmpty())
                 viagem.setId(Integer.parseInt(jTextFieldIndentificador.getText().trim()));
             if(!jTextFieldValor.getText().trim().isEmpty())
-                viagem.setValor(Integer.parseInt(jTextFieldValor.getText().trim()));
+                viagem.setValor(Float.parseFloat(jTextFieldValor.getText().trim()));
             
             return viagem;
         } catch (Exception e) {
@@ -538,7 +538,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                 if(viagem.getTurno())
                     linha.add("Manhã");
                 else linha.add("Noite");
-                linha.add(viagem.getValor()+ "");
+                linha.add("R$"+viagem.getValor());
                 linha.add(viagem.getMotorista().getNome());
                 linha.add(viagem.getMotorista().getLocalizacao());
                 linha.add(viagem.getMotorista().getCnh());
