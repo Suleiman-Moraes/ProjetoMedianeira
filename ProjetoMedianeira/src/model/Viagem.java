@@ -11,10 +11,11 @@ public class Viagem {
     protected Onibus onibus;
     protected Motorista motorista;
     protected int id;
+    protected float valor;
 
     //Construtor
     public Viagem() {}
-    public Viagem(Date dataSaida, boolean turno, String de, String ate, Onibus onibus, Motorista motorista, int id) {
+    public Viagem(Date dataSaida, boolean turno, String de, String ate, Onibus onibus, Motorista motorista, int id, float valor) {
         this.dataSaida = dataSaida;
         this.turno = turno;
         this.de = de;
@@ -22,6 +23,7 @@ public class Viagem {
         this.onibus = onibus;
         this.motorista = motorista;
         this.id = id;
+        this.valor = valor;
     }
     public Viagem(Viagem objeto) {
         this.dataSaida = objeto.dataSaida;
@@ -31,6 +33,7 @@ public class Viagem {
         this.onibus = objeto.onibus;
         this.motorista = objeto.motorista;
         this.id = objeto.id;
+        this.valor = objeto.valor;
     }
     
     //Getters e Setters
@@ -88,5 +91,13 @@ public class Viagem {
 
     public void setMotorista(Motorista motorista) {
         this.motorista = motorista;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 }
