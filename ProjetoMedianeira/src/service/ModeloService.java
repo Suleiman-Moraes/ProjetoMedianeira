@@ -9,6 +9,9 @@ public class ModeloService implements ICrudService<Modelo>{
 
     @Override
     public void salvar(Modelo t) throws Exception {
+        if(t.getPoltrona() <= 0){
+            throw new Exception("Poltrona Inválida.");
+        }
         if(t.getId() != 0) new ModeloDao().alterar(t);
         else new ModeloDao().inserir(t);
     }

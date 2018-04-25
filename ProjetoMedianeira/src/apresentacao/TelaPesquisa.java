@@ -26,35 +26,36 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     private Motorista motorista;
     private Viagem viagem;
     
-    public TelaPesquisa() {
+    public TelaPesquisa(String titulo) {
         initComponents();
+        this.setTitle(titulo);
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada) {
-        this();
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, String titulo) {
+        this(titulo);
         this.chamada = chamada;
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Onibus onibus) {
-        this();
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Onibus onibus, String titulo) {
+        this(titulo);
         this.onibus = onibus;
         this.chamada = chamada;
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Motorista motorista) {
-        this();
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Motorista motorista, String titulo) {
+        this(titulo);
         this.motorista = motorista;
         this.chamada = chamada;
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Viagem viagem) {
-        this();
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Viagem viagem, String titulo) {
+        this(titulo);
         this.viagem = viagem;
         this.chamada = chamada;
         this.principal = principal;
@@ -74,6 +75,8 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButtonFechar = new javax.swing.JButton();
+
+        setResizable(true);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 

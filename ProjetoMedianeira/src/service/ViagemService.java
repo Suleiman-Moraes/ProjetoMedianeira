@@ -27,6 +27,9 @@ public class ViagemService implements ICrudService<Viagem> {
         if (!this.isDateValid(t.getDataSaida())) {
             throw new Exception("Data Inválida.");
         }
+        if(t.getValor() <= 0){
+            throw new Exception("Valor Inválido.");
+        }
         if (t.getId() > 0) {
             new ViagemDao().alterar(t);
         } else {

@@ -322,7 +322,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem");
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem", "Visualização de Viagem");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -394,10 +394,10 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldValorKeyTyped
 
     private void validaCampos() throws Exception{
-        if(jFormattedTextFieldData.getText().trim().equals("")) 
-            throw new Exception("Insira a Data de Saída");
         if(jComboBoxDe.getSelectedIndex() == 0) throw new Exception("Selecione o De.");
         if(jComboBoxTurno.getSelectedIndex() == 0) throw new Exception("Selecione o Turno.");
+        if(jFormattedTextFieldData.getText().trim().length() != 10) 
+            throw new Exception("Insira a Data de Saída");
         if(jTextFieldValor.getText().trim().equals("")) throw new Exception("Insira o Valor.");
     }
     

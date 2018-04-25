@@ -4,7 +4,6 @@ import apresentacao.TelaPesquisa;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Motorista;
 import service.MotoristaService;
 
@@ -53,6 +52,8 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
         jButtonPesquisar = new javax.swing.JButton();
         jTextFieldCnh = new javax.swing.JTextField();
         jComboBoxLocalizacao = new javax.swing.JComboBox<>();
+
+        setTitle("Cadastro Motorista");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
 
@@ -266,7 +267,7 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "motorista");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "motorista", "Visualização de Motorista");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -302,9 +303,9 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     }
     
     private void validaCampos() throws Exception{
+        if(jTextFieldNome.getText().trim().equals("")) throw new Exception("Insira o Nome.");
         if(jComboBoxLocalizacao.getSelectedIndex() == 0) throw new Exception("Selecione uma Localização.");
         if(jTextFieldCnh.getText().trim().equals("")) throw new Exception("Insira o número da CNH.");
-        if(jTextFieldNome.getText().trim().equals("")) throw new Exception("Insira o Nome.");
         if(jTextFieldCnh.getText().length() != 11) throw new Exception("CNH Obrigatório 11 Dígitos.");
     }
     private void limparTela(){

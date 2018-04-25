@@ -302,7 +302,7 @@ public class CadastroModelo extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "modelo");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "modelo", "Visualização de Modelo");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -335,11 +335,11 @@ public class CadastroModelo extends javax.swing.JInternalFrame {
     }
     
     private void validaCampos() throws Exception{
-        if(jTextFieldGeracao.getText().trim().equals("")) throw new Exception("Insira a Geração.");
         if(jTextFieldMarca.getText().trim().equals("")) throw new Exception("Insira a Marca.");
-        if(jTextFieldModelo.getText().trim().equals("")) throw new Exception("Insira o Modelo.");
-        if(jTextFieldPoltrona.getText().trim().equals("")) throw new Exception("Insira a Poltrona.");
         if(jTextFieldTipo.getText().trim().equals("")) throw new Exception("Insira o Tipo.");
+        if(jTextFieldModelo.getText().trim().equals("")) throw new Exception("Insira o Modelo.");
+        if(jTextFieldGeracao.getText().trim().equals("")) throw new Exception("Insira a Geração.");
+        if(jTextFieldPoltrona.getText().trim().equals("")) throw new Exception("Insira a Poltrona.");
     }
     private void limparTela(){
         try {
