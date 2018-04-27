@@ -1,18 +1,38 @@
 package apresentacao.venda;
 
+import apresentacao.TelaPesquisa;
 import java.text.SimpleDateFormat;
+import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JDesktopPane;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import model.Motorista;
-import model.Onibus;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import model.Passagem;
 import model.Viagem;
+import service.PassagemService;
 import service.ViagemService;
 
 public class VendaPassagem extends javax.swing.JInternalFrame {
 
+    private Viagem viagem;
+    private JDesktopPane principal;
+    private Vector<String> cabecalho;
+    private Vector detalhe;
+    private Passagem passagem;
+    
     public VendaPassagem() {
         initComponents();
     }
+
+    public VendaPassagem(JDesktopPane principal) {
+        this();
+        this.principal = principal;
+    }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -101,11 +121,6 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
 
         jTextFieldValor.setEditable(false);
         jTextFieldValor.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jTextFieldValor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldValorKeyTyped(evt);
-            }
-        });
 
         jTextFieldTurno.setEditable(false);
         jTextFieldTurno.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -357,21 +372,6 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
-    private void jTextFieldValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldValorKeyTyped
-        try {
-            Validacao x = new Validacao();
-            if(jTextFieldValor.getText().trim().length() >= 6) evt.consume();
-            if(!x.validaCampoNumero(String.valueOf(evt.getKeyChar())))
-            evt.consume();
-            if(jTextFieldValor.getText().trim().length() > 0)
-            Double.parseDouble(jTextFieldValor.getText().trim());
-        } catch (Exception e) {
-            evt.consume();
-            jTextFieldValor.setText(jTextFieldValor.getText().trim().substring(0,
-                jTextFieldValor.getText().trim().length() - 1));
-        }
-    }//GEN-LAST:event_jTextFieldValorKeyTyped
-
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
             this.validaCampos();
@@ -387,11 +387,12 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
-            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar a exclusão do Motorista?",
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar a exclusão da Passagem?",
                 "VIAÇÃO NOSSA SENHORA DE MEDIANEIRA ltda", JOptionPane.YES_NO_OPTION);
 
             if (resposta == JOptionPane.YES_OPTION) {
-                new ViagemService().deletar(Integer.parseInt(jTextFieldIndentificador.getText()));
+                new ViagemService().deletar(Integer.parseInt(jTextFieldIndentificador.getText()), 
+                        Integer.parseInt(jTextFieldPoltrona.getText().trim()));
 
                 JOptionPane.showMessageDialog(rootPane, "Operação efetuada com sucesso!",
                     "Informação", JOptionPane.INFORMATION_MESSAGE);
@@ -423,8 +424,15 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonPoltronasActionPerformed
 
-    private void validaCampos(){
-        
+    private void validaCampos() throws Exception{
+        if(jTextFieldNome.getText().trim().isEmpty())
+            throw new Exception("Insira o Nome.");
+        if(jTextFieldPoltrona.getText().trim().isEmpty())
+            throw new Exception("Insira Poltrona.");
+        if(jFormattedTextFieldCpf.getText().trim().length() != 14)
+            throw new Exception("Insira o CPF.");
+
+        if(viagem == null) throw new Exception("Escolha uma Viagem.");;
     }
     
     private void limparTelaPassagem(){
@@ -447,6 +455,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
     private void limparTela(){
         this.limparTelaPassagem();
         this.limparTelaviagem();
+        jButtonExcluir.setEnabled(false);
     }
     
     private void preencherTelaViagem(Viagem viagem){
@@ -492,36 +501,71 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         }
     }
     
-    private Viagem printTela(){
+    private Passagem printTela(){
         try {
-            Viagem viagem = new Viagem();
-            if(jFormattedTextFieldData.getText().trim().length() == 10 &&
-                new ViagemService().isDateValid(jFormattedTextFieldData.getText().trim())){
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                viagem.setDataSaida(format.parse(jFormattedTextFieldData.getText().trim()));
-            }
-            if(!jTextFieldDe.getText().trim().equals(""))
-                viagem.setDe(jTextFieldDe.getText().trim());
-            if(!jTextFieldAte.getText().trim().equals(""))
-                viagem.setAte(jTextFieldAte.getText().trim());
-            if(!jTextFieldTurno.getText().trim().equals("")){
-                if(jTextFieldTurno.getText().trim().equals("Manhã"))viagem.setTurno(true);
-                else viagem.setTurno(false);
-            }
-            if(!jTextFieldOnibus.getText().trim().equals(""))
-                viagem.(jTextFieldAte.getText().trim());
-            if(!jTextFieldAte.getText().trim().equals(""))
-                viagem.setAte(jTextFieldAte.getText().trim());
+            Passagem passagem = new Passagem();
+            if(!jTextFieldNome.getText().trim().isEmpty())
+                passagem.setNome(jTextFieldNome.getText().trim());
+            if(!jTextFieldPoltrona.getText().trim().isEmpty())
+                passagem.setNumeroPlotrona(Integer.parseInt(
+                        jTextFieldPoltrona.getText().trim()));
+            if(jFormattedTextFieldCpf.getText().trim().length() == 14)
+                passagem.setCpf(jFormattedTextFieldCpf.getText().trim());
             
-            if(!jTextFieldIndentificador.getText().trim().isEmpty())
-                viagem.setId(Integer.parseInt(jTextFieldIndentificador.getText().trim()));
-            if(!jTextFieldValor.getText().trim().isEmpty())
-                viagem.setValor(Float.parseFloat(jTextFieldValor.getText().trim()));
+            if(viagem != null) passagem = new Passagem(passagem, viagem);
             
-            return viagem;
+            return passagem;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
             return null;
+        }
+    }
+    
+    public void preencherTabela() {
+        try {
+            cabecalho = new Vector();
+            cabecalho.add("Nome");
+            cabecalho.add("CPF");
+            cabecalho.add("N Poltrona");
+            cabecalho.add("Data de Saída");
+            cabecalho.add("De");
+            cabecalho.add("Até");
+            cabecalho.add("Turno");
+            cabecalho.add("Valor");
+            cabecalho.add("Nome do Motorista");
+            cabecalho.add("Número do ônibus");
+            cabecalho.add("Marca");
+            cabecalho.add("Modelo");
+            cabecalho.add("Geração");
+            cabecalho.add("Tipo");
+            
+            detalhe = new Vector();
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            
+            for(Passagem passagem : new PassagemService().visualizarAll()){
+                Vector<String> linha = new Vector();
+                
+                linha.add(passagem.getNome());
+                linha.add(passagem.getCpf());
+                linha.add(passagem.getNumeroPlotrona() + "");
+                linha.add(format.format(viagem.getDataSaida()));
+                linha.add(viagem.getDe());
+                linha.add(viagem.getAte());
+                if(viagem.getTurno())
+                    linha.add("Manhã");
+                else linha.add("Noite");
+                linha.add("R$"+viagem.getValor());
+                linha.add(viagem.getMotorista().getNome());
+                linha.add(viagem.getOnibus().getNumero()+ "");
+                linha.add(viagem.getOnibus().getModelo().getMarca());
+                linha.add(viagem.getOnibus().getModelo().getModelo());
+                linha.add(viagem.getOnibus().getModelo().getGeracao());
+                linha.add(viagem.getOnibus().getModelo().getTipo());
+                
+                detalhe.add(linha);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 

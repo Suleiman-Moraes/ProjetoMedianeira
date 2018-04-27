@@ -34,6 +34,12 @@ public class Passagem extends Viagem{
         this.cpf = objeto.cpf;
         this.numeroPlotrona = objeto.numeroPlotrona;
     }
+    public Passagem(Passagem passagem, Viagem viagem) {
+        super(viagem);
+        this.nome = passagem.nome;
+        this.cpf = passagem.cpf;
+        this.numeroPlotrona = passagem.numeroPlotrona;
+    }
     
     //Getters e Setters
     public String getNome() {

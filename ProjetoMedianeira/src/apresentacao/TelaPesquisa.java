@@ -21,47 +21,25 @@ import service.ViagemService;
 public class TelaPesquisa extends javax.swing.JInternalFrame {
     
     private JDesktopPane principal;
-    private String chamada;
+    private String titulo;
     private Onibus onibus;
     private Motorista motorista;
     private Viagem viagem;
+    private Object object;
     
     public TelaPesquisa(String titulo) {
         initComponents();
+        this.titulo = titulo;
         this.setTitle(titulo);
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, String titulo) {
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Object object, String titulo) {
         this(titulo);
-        this.chamada = chamada;
+        this.object = object;
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Onibus onibus, String titulo) {
-        this(titulo);
-        this.onibus = onibus;
-        this.chamada = chamada;
-        this.principal = principal;
-        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
-    }
-    
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Motorista motorista, String titulo) {
-        this(titulo);
-        this.motorista = motorista;
-        this.chamada = chamada;
-        this.principal = principal;
-        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
-    }
-    
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String chamada, Viagem viagem, String titulo) {
-        this(titulo);
-        this.viagem = viagem;
-        this.chamada = chamada;
-        this.principal = principal;
-        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,17 +130,17 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
         try {
             JInternalFrame tela = null;
-            if(null != chamada)switch (chamada) {
-                case "motorista":
+            if(null != titulo)switch (titulo) {
+                case "Visualização de Motorista":
                     tela = new CadastroMotorista(principal);
                     break;
-                case "modelo":
+                case "Visualização de Modelo":
                     tela = new CadastroModelo(principal);
                     break;
-                case "onibus":
+                case "Visualização de Ônibus":
                     tela = new CadastroOnibus(principal);
                     break;
-                case "viagem":
+                case "Visualização de Viagem":
                     tela = new CadastroViagem(principal);
                     break;
                 default:
@@ -181,22 +159,22 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
             JInternalFrame tela = null;
             int linha = jTable1.getSelectedRow();
             
-            if(chamada == "motorista"){
+            if(titulo == "Visualização de Motorista"){
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Motorista motorista = new MotoristaService().visualizarUm(Integer.parseInt(codigo));
                 tela = new CadastroMotorista(principal, motorista);
             }
-            else if(chamada == "modelo"){
+            else if(titulo == "Visualização de Modelo"){
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Modelo modelo = new ModeloService().visualizarUm(Integer.parseInt(codigo));
                 tela = new CadastroModelo(principal, modelo);
             }
-            else if(chamada == "onibus"){
+            else if(titulo == "Visualização de Ônibus"){
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Onibus onibus = new OnibusService().visualizarUm(codigo);
                 tela = new CadastroOnibus(principal, onibus);
             }
-            else if(chamada == "viagem"){
+            else if(titulo == "Visualização de Viagem"){
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Viagem viagem = new ViagemService().visualizarUm(Integer.parseInt(codigo));
                 tela = new CadastroViagem(principal, viagem);

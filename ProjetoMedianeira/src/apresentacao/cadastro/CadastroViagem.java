@@ -349,7 +349,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
-            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar a exclusão do Motorista?",
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar a exclusão da Viagem?",
                 "VIAÇÃO NOSSA SENHORA DE MEDIANEIRA ltda", JOptionPane.YES_NO_OPTION);
 
             if (resposta == JOptionPane.YES_OPTION) {
