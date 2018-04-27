@@ -1,15 +1,11 @@
 package apresentacao.venda;
 
 import apresentacao.TelaPesquisa;
+import apresentacao.cadastro.CadastroViagem;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import model.Passagem;
 import model.Viagem;
 import service.PassagemService;
@@ -32,7 +28,13 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         this.principal = principal;
     }
     
-    
+    public VendaPassagem(JDesktopPane principal, Passagem passagem) {
+        this();
+        this.principal = principal;
+        this.passagem = passagem;
+        this.viagem = new Viagem(passagem);
+        this.preencherTela(passagem);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -44,7 +46,6 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jTextFieldIndentificador = new javax.swing.JTextField();
-        jButtonPesquisar = new javax.swing.JButton();
         jTextFieldAte = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
         jFormattedTextFieldData = new javax.swing.JFormattedTextField();
@@ -56,6 +57,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         jTextFieldMotorista = new javax.swing.JTextField();
         jTextFieldOnibus = new javax.swing.JTextField();
         jTextFieldDe = new javax.swing.JTextField();
+        jButtonPesquisarViagem = new javax.swing.JButton();
         jPanelPassagem = new javax.swing.JPanel();
         jButtonSalvar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -68,6 +70,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         jLabel35 = new javax.swing.JLabel();
         jTextFieldPoltrona = new javax.swing.JTextField();
         jButtonPoltronas = new javax.swing.JButton();
+        jButtonPesquisarPassagem = new javax.swing.JButton();
 
         setTitle("Venda de Passagens");
 
@@ -87,14 +90,6 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
 
         jTextFieldIndentificador.setEditable(false);
         jTextFieldIndentificador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-
-        jButtonPesquisar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButtonPesquisar.setText("PESQUISAR");
-        jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPesquisarActionPerformed(evt);
-            }
-        });
 
         jTextFieldAte.setEditable(false);
         jTextFieldAte.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -134,6 +129,14 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         jTextFieldDe.setEditable(false);
         jTextFieldDe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
+        jButtonPesquisarViagem.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButtonPesquisarViagem.setText("PESQUISAR");
+        jButtonPesquisarViagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarViagemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelViagemLayout = new javax.swing.GroupLayout(jPanelViagem);
         jPanelViagem.setLayout(jPanelViagemLayout);
         jPanelViagemLayout.setHorizontalGroup(
@@ -162,7 +165,6 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
                             .addComponent(jTextFieldDe, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelViagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonPesquisar)
                             .addGroup(jPanelViagemLayout.createSequentialGroup()
                                 .addComponent(jTextFieldAte, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -170,10 +172,11 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
                             .addGroup(jPanelViagemLayout.createSequentialGroup()
                                 .addComponent(jTextFieldTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel31))))
+                                .addComponent(jLabel31))
+                            .addComponent(jButtonPesquisarViagem)))
                     .addComponent(jTextFieldMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldOnibus, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanelViagemLayout.setVerticalGroup(
             jPanelViagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +185,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
                 .addGroup(jPanelViagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
                     .addComponent(jTextFieldIndentificador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPesquisar))
+                    .addComponent(jButtonPesquisarViagem))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelViagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
@@ -274,6 +277,14 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonPesquisarPassagem.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButtonPesquisarPassagem.setText("PESQUISAR");
+        jButtonPesquisarPassagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarPassagemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelPassagemLayout = new javax.swing.GroupLayout(jPanelPassagem);
         jPanelPassagem.setLayout(jPanelPassagemLayout);
         jPanelPassagemLayout.setHorizontalGroup(
@@ -302,26 +313,31 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonPoltronas)))))
                 .addGap(18, 18, 18)
-                .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisarPassagem))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelPassagemLayout.setVerticalGroup(
             jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPassagemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel34)
-                    .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPassagemLayout.createSequentialGroup()
+                        .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel33)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34)
+                            .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonPesquisarPassagem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel35)
                     .addComponent(jTextFieldPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPoltronas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanelPassagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonExcluir)
@@ -354,23 +370,23 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanelViagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(242, Short.MAX_VALUE)))
+                    .addContainerGap(246, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
+    private void jButtonPesquisarPassagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarPassagemActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem", "Visualização de Viagem");
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem", "Visualização de Passagem");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButtonPesquisarActionPerformed
+    }//GEN-LAST:event_jButtonPesquisarPassagemActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
@@ -423,6 +439,21 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
     private void jButtonPoltronasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPoltronasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonPoltronasActionPerformed
+
+    private void jButtonPesquisarViagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarViagemActionPerformed
+        try {
+            preencherTabela();
+            CadastroViagem cd = new CadastroViagem();
+            cd.preencherTabela();
+            this.printTela();
+            TelaPesquisa tela = new TelaPesquisa(principal, cd.getCabecalho(), cd.getDetalhe(), passagem, "Visualização de Passagem");
+            principal.add(tela);
+            tela.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonPesquisarViagemActionPerformed
 
     private void validaCampos() throws Exception{
         if(jTextFieldNome.getText().trim().isEmpty())
@@ -524,6 +555,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
     public void preencherTabela() {
         try {
             cabecalho = new Vector();
+            cabecalho.add("Cod. Viagem");
             cabecalho.add("Nome");
             cabecalho.add("CPF");
             cabecalho.add("N Poltrona");
@@ -545,6 +577,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
             for(Passagem passagem : new PassagemService().visualizarAll()){
                 Vector<String> linha = new Vector();
                 
+                linha.add(passagem.getId() + "");
                 linha.add(passagem.getNome());
                 linha.add(passagem.getCpf());
                 linha.add(passagem.getNumeroPlotrona() + "");
@@ -572,7 +605,8 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonFechar;
-    private javax.swing.JButton jButtonPesquisar;
+    private javax.swing.JButton jButtonPesquisarPassagem;
+    private javax.swing.JButton jButtonPesquisarViagem;
     private javax.swing.JButton jButtonPoltronas;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonlLimpar;

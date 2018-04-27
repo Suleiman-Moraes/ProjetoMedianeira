@@ -284,7 +284,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "onibus", "Visualização de Ônibus");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "Visualização de Ônibus");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();

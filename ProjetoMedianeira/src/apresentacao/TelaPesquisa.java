@@ -4,6 +4,7 @@ import apresentacao.cadastro.CadastroViagem;
 import apresentacao.cadastro.CadastroOnibus;
 import apresentacao.cadastro.CadastroMotorista;
 import apresentacao.cadastro.CadastroModelo;
+import apresentacao.venda.VendaPassagem;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -12,10 +13,12 @@ import javax.swing.table.DefaultTableModel;
 import model.Modelo;
 import model.Motorista;
 import model.Onibus;
+import model.Passagem;
 import model.Viagem;
 import service.ModeloService;
 import service.MotoristaService;
 import service.OnibusService;
+import service.PassagemService;
 import service.ViagemService;
 
 public class TelaPesquisa extends javax.swing.JInternalFrame {
@@ -36,6 +39,12 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Object object, String titulo) {
         this(titulo);
         this.object = object;
+        this.principal = principal;
+        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
+    }
+    
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String titulo) {
+        this(titulo);
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
@@ -143,6 +152,9 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 case "Visualização de Viagem":
                     tela = new CadastroViagem(principal);
                     break;
+                case "Visualização de Passagem":
+                    tela = new VendaPassagem(principal, (Passagem) object);
+                    break;
                 default:
                     break;
             }
@@ -178,6 +190,12 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Viagem viagem = new ViagemService().visualizarUm(Integer.parseInt(codigo));
                 tela = new CadastroViagem(principal, viagem);
+            }
+            else if(titulo == "Visualização de Passagem"){
+                String codigoV = jTable1.getValueAt(linha, 0).toString();
+                String codigoP = jTable1.getValueAt(linha, 3).toString();
+                Passagem passagem = new PassagemService().visualizarUm(new Integer(codigoP), new Integer(codigoV));
+                tela = new VendaPassagem(principal, passagem);
             }
             principal.add(tela);
             tela.setVisible(true);

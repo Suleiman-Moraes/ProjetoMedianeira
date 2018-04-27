@@ -322,7 +322,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem", "Visualização de Viagem");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "Visualização de Viagem");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -509,22 +509,22 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     public void preencherTabela() {
         try {
             cabecalho = new Vector();
-            cabecalho.add("Código");
-            cabecalho.add("Data de Saída");
-            cabecalho.add("De");
-            cabecalho.add("Até");
-            cabecalho.add("Turno");
-            cabecalho.add("Valor");
-            cabecalho.add("Nome do Motorista");
-            cabecalho.add("Localização");
-            cabecalho.add("CNH");
-            cabecalho.add("Número do ônibus");
-            cabecalho.add("Ano");
-            cabecalho.add("Marca");
-            cabecalho.add("Modelo");
-            cabecalho.add("Geração");
-            cabecalho.add("Tipo");
-            cabecalho.add("Poltrona");
+            getCabecalho().add("Código");
+            getCabecalho().add("Data de Saída");
+            getCabecalho().add("De");
+            getCabecalho().add("Até");
+            getCabecalho().add("Turno");
+            getCabecalho().add("Valor");
+            getCabecalho().add("Nome do Motorista");
+            getCabecalho().add("Localização");
+            getCabecalho().add("CNH");
+            getCabecalho().add("Número do ônibus");
+            getCabecalho().add("Ano");
+            getCabecalho().add("Marca");
+            getCabecalho().add("Modelo");
+            getCabecalho().add("Geração");
+            getCabecalho().add("Tipo");
+            getCabecalho().add("Poltrona");
             
             detalhe = new Vector();
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -550,7 +550,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
                 linha.add(viagem.getOnibus().getModelo().getTipo());
                 linha.add(viagem.getOnibus().getModelo().getPoltrona() + "");
                 
-                detalhe.add(linha);
+                getDetalhe().add(linha);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -581,4 +581,12 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldIndentificador;
     private javax.swing.JTextField jTextFieldValor;
     // End of variables declaration//GEN-END:variables
+
+    public Vector<String> getCabecalho() {
+        return cabecalho;
+    }
+
+    public Vector getDetalhe() {
+        return detalhe;
+    }
 }
