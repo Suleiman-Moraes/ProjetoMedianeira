@@ -40,6 +40,9 @@ public class Passagem extends Viagem{
         this.cpf = passagem.cpf;
         this.numeroPlotrona = passagem.numeroPlotrona;
     }
+    public Passagem(Viagem viagem) {
+        super(viagem);
+    }
     
     //Getters e Setters
     public String getNome() {
