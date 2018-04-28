@@ -1,13 +1,18 @@
 package apresentacao.venda;
 
 import apresentacao.TelaPesquisa;
+import apresentacao.TelaPoltrona;
 import apresentacao.cadastro.CadastroViagem;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import model.Modelo;
 import model.Passagem;
 import model.Viagem;
+import persistencia.PoltronaDao;
 import service.PassagemService;
 import service.ViagemService;
 
@@ -34,6 +39,15 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         this.passagem = passagem;
         this.viagem = new Viagem(passagem);
         this.preencherTela(passagem);
+    }
+    
+    public VendaPassagem(JDesktopPane principal, Passagem passagem, int num) {
+        this();
+        this.principal = principal;
+        this.passagem = passagem;
+        this.viagem = new Viagem(passagem);
+        this.preencherTela(passagem);
+        jTextFieldPoltrona.setText(num + "");
     }
 
     @SuppressWarnings("unchecked")
@@ -437,7 +451,18 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonFecharActionPerformed
 
     private void jButtonPoltronasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPoltronasActionPerformed
-        // TODO add your handling code here:
+        try {
+            List<Boolean> lista = new PoltronaDao().visualizarUm(viagem.getId()).getListaPoltrona();
+            
+            TelaPoltrona janela = new TelaPoltrona(this.principal, lista, printTela());
+            this.principal.add(janela);
+            janela.setTitle("Poltronas");
+            janela.setSize(300,300);
+            janela.setResizable(false);
+            janela.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonPoltronasActionPerformed
 
     private void jButtonPesquisarViagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarViagemActionPerformed
@@ -446,7 +471,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
             CadastroViagem cd = new CadastroViagem();
             cd.preencherTabela();
             this.printTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cd.getCabecalho(), cd.getDetalhe(), passagem, "Visualização de Passagem");
+            TelaPesquisa tela = new TelaPesquisa(principal, cd.getCabecalho(), cd.getDetalhe(), passagem, "Visualização de Viagens");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -514,7 +539,10 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
         try {
             if(passagem.getNome() != null) jTextFieldNome.setText(passagem.getNome());
             if(passagem.getCpf() != null) jFormattedTextFieldCpf.setText(passagem.getCpf());
-            if(passagem.getNumeroPlotrona() > 0) jTextFieldPoltrona.setText(passagem.getNumeroPlotrona() + "");
+            if(passagem.getNumeroPlotrona() > 0){
+                jTextFieldPoltrona.setText(passagem.getNumeroPlotrona() + "");
+                jButtonExcluir.setEnabled(true);
+            }
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -526,7 +554,6 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
             this.preencherTelaPassagem(passagem);
             this.preencherTelaViagem(passagem);
             
-            jButtonExcluir.setEnabled(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }

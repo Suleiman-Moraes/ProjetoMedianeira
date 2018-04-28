@@ -152,8 +152,11 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 case "Visualização de Viagem":
                     tela = new CadastroViagem(principal);
                     break;
+                case "Visualização de Viagens":
+                    tela = new VendaPassagem(principal);
+                    break;
                 case "Visualização de Passagem":
-                    tela = new VendaPassagem(principal, (Passagem) object);
+                    tela = new VendaPassagem(principal);
                     break;
                 default:
                     break;
@@ -190,6 +193,11 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 String codigo = jTable1.getValueAt(linha, 0).toString();
                 Viagem viagem = new ViagemService().visualizarUm(Integer.parseInt(codigo));
                 tela = new CadastroViagem(principal, viagem);
+            }
+            else if(titulo == "Visualização de Viagens"){
+                String codigo = jTable1.getValueAt(linha, 0).toString();
+                Viagem viagem = new ViagemService().visualizarUm(Integer.parseInt(codigo));
+                tela = new VendaPassagem(principal, new Passagem(viagem));
             }
             else if(titulo == "Visualização de Passagem"){
                 String codigoV = jTable1.getValueAt(linha, 0).toString();

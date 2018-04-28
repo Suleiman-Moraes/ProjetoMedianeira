@@ -64,7 +64,11 @@ public class PoltronaDao implements ICrudDao<Poltrona>{
         
         Viagem viagem = new ViagemDao().visualizarUm((int) object[0]);
         
-        List<Boolean> lista = new ArrayList<>(viagem.getOnibus().getModelo().getPoltrona());
+        List<Boolean> lista = new ArrayList<>();
+        for (int i = 0; i < viagem.getOnibus().getModelo().getPoltrona(); i++) {
+            lista.add(Boolean.FALSE);
+        }
+        
         while (rs.next()) {
             lista.set(rs.getInt("numero")-1, Boolean.TRUE);
 //            for (int i = lista.size(); i < rs.getInt("numero")-1; i++) {
