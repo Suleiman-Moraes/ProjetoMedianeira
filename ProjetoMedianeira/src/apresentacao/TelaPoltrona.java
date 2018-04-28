@@ -9,6 +9,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import model.Passagem;
 
 public class TelaPoltrona extends JInternalFrame implements ActionListener{
@@ -24,12 +25,14 @@ public class TelaPoltrona extends JInternalFrame implements ActionListener{
         this.tela = tela;
         
         linha = (lista.size()+2) / 4;
-        
+        int cont = 0;
         for (int i = 0; i < lista.size(); i++) {
             
             JButton aux = new JButton((i+1)+"");
             if(lista.get(i)){
                 aux.setEnabled(false);
+            }else{
+                cont++;
             }
             aux.addActionListener(this);
             vet.add(aux);
@@ -38,6 +41,15 @@ public class TelaPoltrona extends JInternalFrame implements ActionListener{
         setLayout(new GridLayout(linha,4));
         for (int i = 0; i < vet.size(); i++) {
             add(vet.get(i));
+        }
+        if(cont == 0){
+            this.setClosable(true);
+            JInternalFrame janela = null;
+            janela = new VendaPassagem(tela, passagem, 0);
+            tela.add(janela);
+            janela.setVisible(true);
+            this.dispose();
+            JOptionPane.showMessageDialog(rootPane, "Ônibus Lotado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
         
 //        add(jb2);

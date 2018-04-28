@@ -1,5 +1,6 @@
 package persistencia;
 
+import interfaces.ICrudDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ public class PoltronaDao implements ICrudDao<Poltrona>{
         for(int i = 0; i < t.getListaPoltrona().size(); i++){
             if(t.getListaPoltrona().get(i)){
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setInt(1, i);
+                ps.setInt(1, i+1);
                 ps.setBoolean(2, t.getListaPoltrona().get(i));
                 ps.setInt(3, t.getViagem().getId());
                 ps.execute();
@@ -35,7 +36,7 @@ public class PoltronaDao implements ICrudDao<Poltrona>{
         
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, (int) object[0]);
-        ps.setInt(1, (int) object[1]);
+        ps.setInt(2, (int) object[1]);
         ps.execute();
     }
     

@@ -6,6 +6,7 @@
 package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
+import interfaces.ITabelaViagem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,7 +26,7 @@ import util.Validacao;
  *
  * @author Lenovo
  */
-public class CadastroViagem extends javax.swing.JInternalFrame {
+public class CadastroViagem extends javax.swing.JInternalFrame implements ITabelaViagem{
 
     private JDesktopPane principal;
     private Vector<String> cabecalho;
@@ -508,53 +509,17 @@ public class CadastroViagem extends javax.swing.JInternalFrame {
     
     public void preencherTabela() {
         try {
-            cabecalho = new Vector();
-            getCabecalho().add("Código");
-            getCabecalho().add("Data de Saída");
-            getCabecalho().add("De");
-            getCabecalho().add("Até");
-            getCabecalho().add("Turno");
-            getCabecalho().add("Valor");
-            getCabecalho().add("Nome do Motorista");
-            getCabecalho().add("Localização");
-            getCabecalho().add("CNH");
-            getCabecalho().add("Número do ônibus");
-            getCabecalho().add("Ano");
-            getCabecalho().add("Marca");
-            getCabecalho().add("Modelo");
-            getCabecalho().add("Geração");
-            getCabecalho().add("Tipo");
-            getCabecalho().add("Poltrona");
-            
-            detalhe = new Vector();
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            for(Viagem viagem : new ViagemService().visualizarAll()){
-                Vector<String> linha = new Vector();
-                
-                linha.add(viagem.getId() + "");
-                linha.add(format.format(viagem.getDataSaida()));
-                linha.add(viagem.getDe());
-                linha.add(viagem.getAte());
-                if(viagem.getTurno())
-                    linha.add("Manhã");
-                else linha.add("Noite");
-                linha.add("R$"+viagem.getValor());
-                linha.add(viagem.getMotorista().getNome());
-                linha.add(viagem.getMotorista().getLocalizacao());
-                linha.add(viagem.getMotorista().getCnh());
-                linha.add(viagem.getOnibus().getNumero()+ "");
-                linha.add(viagem.getOnibus().getAno());
-                linha.add(viagem.getOnibus().getModelo().getMarca());
-                linha.add(viagem.getOnibus().getModelo().getModelo());
-                linha.add(viagem.getOnibus().getModelo().getGeracao());
-                linha.add(viagem.getOnibus().getModelo().getTipo());
-                linha.add(viagem.getOnibus().getModelo().getPoltrona() + "");
-                
-                getDetalhe().add(linha);
-            }
+            Vector[] vet = this.preencherTabela(detalhe, cabecalho);
+            cabecalho = vet[0];
+            detalhe = vet[1];
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   
+    }
+    
+    @Override
+    public List<Viagem> listaViagem() throws SQLException {
+        return new ViagemService().visualizarAll();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

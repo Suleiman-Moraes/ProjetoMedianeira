@@ -1,5 +1,6 @@
 package service;
 
+import interfaces.ICrudService;
 import java.sql.SQLException;
 import java.util.List;
 import model.Onibus;

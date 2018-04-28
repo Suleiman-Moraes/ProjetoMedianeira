@@ -2,21 +2,20 @@ package apresentacao.venda;
 
 import apresentacao.TelaPesquisa;
 import apresentacao.TelaPoltrona;
-import apresentacao.cadastro.CadastroViagem;
+import interfaces.ITabelaViagem;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import model.Modelo;
 import model.Passagem;
 import model.Viagem;
 import persistencia.PoltronaDao;
 import service.PassagemService;
 import service.ViagemService;
 
-public class VendaPassagem extends javax.swing.JInternalFrame {
+public class VendaPassagem extends javax.swing.JInternalFrame implements ITabelaViagem{
 
     private Viagem viagem;
     private JDesktopPane principal;
@@ -405,9 +404,9 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
             this.validaCampos();
-            Viagem viagem = printTela();
+            Passagem passagem = printTela();
 
-            new ViagemService().salvar(viagem);
+            new PassagemService().salvar(passagem);
             JOptionPane.showMessageDialog(rootPane, "Dados Inseridos com sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             this.limparTela();
         } catch (Exception e) {
@@ -421,8 +420,9 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
                 "VIAÇÃO NOSSA SENHORA DE MEDIANEIRA ltda", JOptionPane.YES_NO_OPTION);
 
             if (resposta == JOptionPane.YES_OPTION) {
-                new ViagemService().deletar(Integer.parseInt(jTextFieldIndentificador.getText()), 
-                        Integer.parseInt(jTextFieldPoltrona.getText().trim()));
+                viagem.getAte();
+                new PassagemService().deletar(Integer.parseInt(jTextFieldPoltrona.getText().trim()), 
+                        Integer.parseInt(jTextFieldIndentificador.getText()));
 
                 JOptionPane.showMessageDialog(rootPane, "Operação efetuada com sucesso!",
                     "Informação", JOptionPane.INFORMATION_MESSAGE);
@@ -452,6 +452,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
 
     private void jButtonPoltronasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPoltronasActionPerformed
         try {
+            if(viagem == null) throw new Exception("Selecione uma Viagem.");
             List<Boolean> lista = new PoltronaDao().visualizarUm(viagem.getId()).getListaPoltrona();
             
             TelaPoltrona janela = new TelaPoltrona(this.principal, lista, printTela());
@@ -460,6 +461,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
             janela.setSize(300,300);
             janela.setResizable(false);
             janela.setVisible(true);
+            this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -467,11 +469,10 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarViagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarViagemActionPerformed
         try {
-            preencherTabela();
-            CadastroViagem cd = new CadastroViagem();
-            cd.preencherTabela();
-            this.printTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cd.getCabecalho(), cd.getDetalhe(), passagem, "Visualização de Viagens");
+            Vector[] vet = this.preencherTabela(detalhe, cabecalho);
+            cabecalho = vet[0];
+            detalhe = vet[1];
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, this.printTela(), "Visualização de Viagens");
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -608,25 +609,30 @@ public class VendaPassagem extends javax.swing.JInternalFrame {
                 linha.add(passagem.getNome());
                 linha.add(passagem.getCpf());
                 linha.add(passagem.getNumeroPlotrona() + "");
-                linha.add(format.format(viagem.getDataSaida()));
-                linha.add(viagem.getDe());
-                linha.add(viagem.getAte());
-                if(viagem.getTurno())
+                linha.add(format.format(passagem.getDataSaida()));
+                linha.add(passagem.getDe());
+                linha.add(passagem.getAte());
+                if(passagem.getTurno())
                     linha.add("Manhã");
                 else linha.add("Noite");
-                linha.add("R$"+viagem.getValor());
-                linha.add(viagem.getMotorista().getNome());
-                linha.add(viagem.getOnibus().getNumero()+ "");
-                linha.add(viagem.getOnibus().getModelo().getMarca());
-                linha.add(viagem.getOnibus().getModelo().getModelo());
-                linha.add(viagem.getOnibus().getModelo().getGeracao());
-                linha.add(viagem.getOnibus().getModelo().getTipo());
+                linha.add("R$"+passagem.getValor());
+                linha.add(passagem.getMotorista().getNome());
+                linha.add(passagem.getOnibus().getNumero()+ "");
+                linha.add(passagem.getOnibus().getModelo().getMarca());
+                linha.add(passagem.getOnibus().getModelo().getModelo());
+                linha.add(passagem.getOnibus().getModelo().getGeracao());
+                linha.add(passagem.getOnibus().getModelo().getTipo());
                 
                 detalhe.add(linha);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    @Override
+    public List<Viagem> listaViagem() throws SQLException {
+        return new ViagemService().visualizarAPartirDeHoje();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

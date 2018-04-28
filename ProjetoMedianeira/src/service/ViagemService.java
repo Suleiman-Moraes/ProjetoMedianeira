@@ -1,5 +1,6 @@
 package service;
 
+import interfaces.ICrudService;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -50,6 +51,10 @@ public class ViagemService implements ICrudService<Viagem> {
     @Override
     public List<Viagem> visualizarAll() throws SQLException {
         return new ViagemDao().visualizarAll();
+    }
+    
+    public List<Viagem> visualizarAPartirDeHoje() throws SQLException {
+        return new ViagemDao().visualizarAPartirDeHoje();
     }
 
     public boolean retornarDisponibilidade(Motorista motorista, Date data, String de) throws SQLException {

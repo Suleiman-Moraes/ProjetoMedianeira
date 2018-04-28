@@ -1,5 +1,6 @@
 package service;
 
+import interfaces.ICrudService;
 import java.sql.SQLException;
 import java.util.List;
 import model.Modelo;
@@ -9,7 +10,7 @@ public class ModeloService implements ICrudService<Modelo>{
 
     @Override
     public void salvar(Modelo t) throws Exception {
-        if(t.getPoltrona() <= 0){
+        if(t.getPoltrona() <= 0 || t.getPoltrona() > 60){
             throw new Exception("Poltrona Inválida.");
         }
         if(t.getId() != 0) new ModeloDao().alterar(t);

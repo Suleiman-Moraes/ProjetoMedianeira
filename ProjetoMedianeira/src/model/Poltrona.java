@@ -14,8 +14,11 @@ public class Poltrona {
     }
     public Poltrona(Viagem viagem, int poltrona) {
         this.viagem = viagem;
-        this.listaPoltrona = new ArrayList<>(viagem.getOnibus().getModelo().getPoltrona());
-        this.listaPoltrona.set(poltrona, Boolean.TRUE);
+        this.listaPoltrona = new ArrayList<>();
+        for (int i = 0; i < viagem.getOnibus().getModelo().getPoltrona(); i++) {
+            this.listaPoltrona.add(Boolean.FALSE);
+        }
+        this.listaPoltrona.set(poltrona-1, Boolean.TRUE);
     }
     public Poltrona(Poltrona poltrona) {
         this.viagem = poltrona.viagem;

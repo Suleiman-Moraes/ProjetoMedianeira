@@ -1,5 +1,6 @@
 package persistencia;
 
+import interfaces.ICrudDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -87,6 +88,24 @@ public class ViagemDao implements ICrudDao<Viagem> {
 
         String sql = "SELECT * FROM viagem ORDER BY id;";
         PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        List<Viagem> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(new Viagem(new Date(rs.getDate("data_saida").getTime()), rs.getBoolean("turno"), rs.getString("de"), rs.getString("ate"), 
+                    new OnibusDao().visualizarUm(rs.getString("onibus")),
+                    new MotoristaDao().visualizarUm(rs.getInt("motorista")), rs.getInt("id"),
+                    (float) rs.getDouble("valor")));
+        }
+        return lista;
+    }
+    
+    public List<Viagem> visualizarAPartirDeHoje() throws SQLException {
+        Connection con = util.Conexao.getConexao();
+
+        String sql = "SELECT * FROM viagem WHERE data_saida >= ? ORDER BY id;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setDate(1, new java.sql.Date(System.currentTimeMillis()));
         ResultSet rs = ps.executeQuery();
 
         List<Viagem> lista = new ArrayList<>();
