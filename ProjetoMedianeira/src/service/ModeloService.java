@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import model.Modelo;
 import persistencia.ModeloDao;
+import persistencia.OnibusDao;
 
 public class ModeloService implements ICrudService<Modelo>{
 
@@ -13,7 +14,12 @@ public class ModeloService implements ICrudService<Modelo>{
         if(t.getPoltrona() <= 0 || t.getPoltrona() > 60){
             throw new Exception("Poltrona Inválida.");
         }
-        if(t.getId() != 0) new ModeloDao().alterar(t);
+        if(t.getId() != 0){
+            if(new OnibusDao().buscarOnibusPassandoModelo(t.getId()) > 0){
+                throw new Exception("Modelo em Uso.");
+            }
+            new ModeloDao().alterar(t);
+        }
         else new ModeloDao().inserir(t);
     }
 

@@ -100,4 +100,18 @@ public class OnibusDao implements ICrudDao<Onibus>{
         }
         return false;
     }
+    
+    public int buscarOnibusPassandoModelo(int modelo) throws SQLException{
+        Connection con = util.Conexao.getConexao();
+
+        String sql = "SELECT count(numero) as qtde FROM onibus WHERE modelo=?;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, modelo);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            return rs.getInt("qtde");
+        }
+        return 0;
+    }
 }
