@@ -161,7 +161,6 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         try {
             JInternalFrame tela = null;
             int linha = jTable1.getSelectedRow();
-            
             String codigo = jTable1.getValueAt(linha, 0).toString();
             String codigoP = jTable1.getValueAt(linha, 3).toString();
             tela = FabricaAbstrata.getInstance(legenda, principal, codigo, codigoP);

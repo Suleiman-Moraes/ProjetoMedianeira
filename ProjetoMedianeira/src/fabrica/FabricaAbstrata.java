@@ -6,7 +6,6 @@ import apresentacao.cadastro.CadastroOnibus;
 import apresentacao.cadastro.CadastroViagem;
 import apresentacao.venda.VendaPassagem;
 import enun.Legenda;
-import java.security.Principal;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import model.Modelo;
