@@ -1,18 +1,19 @@
 package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
+import enun.Legenda;
+import fabrica.FabricaAbstrata;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import model.Motorista;
 import service.MotoristaService;
 
-public class CadastroMotorista extends javax.swing.JInternalFrame {
+public class CadastroMotorista extends FabricaAbstrata {
 
-    private JDesktopPane principal;
     private Vector<String> cabecalho;
     private Vector detalhe;
-    private Motorista motorista;
+    Legenda legenda = Legenda.MOTORISTA;
     
     public CadastroMotorista() {
         initComponents();
@@ -26,8 +27,8 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     public CadastroMotorista(JDesktopPane principal, Motorista motorista) {
         this();
         this.principal = principal;
-        this.motorista = motorista;
-        this.preencherTela(motorista);
+        this.objeto = motorista;
+        this.preencherTela((Motorista) objeto);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -267,7 +268,7 @@ public class CadastroMotorista extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "Visualização de Motorista");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();

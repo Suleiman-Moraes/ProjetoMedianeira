@@ -6,6 +6,8 @@
 package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
+import enun.Legenda;
+import fabrica.FabricaAbstrata;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -16,12 +18,11 @@ import service.ModeloService;
  *
  * @author Lenovo
  */
-public class CadastroModelo extends javax.swing.JInternalFrame {
+public class CadastroModelo extends FabricaAbstrata {
 
-    private JDesktopPane principal;
     private Vector<String> cabecalho;
     private Vector detalhe;
-    private Modelo modelo;
+    private Legenda legenda = Legenda.MODELO;
     
     public CadastroModelo() {
         initComponents();
@@ -34,8 +35,8 @@ public class CadastroModelo extends javax.swing.JInternalFrame {
     public CadastroModelo(JDesktopPane principal, Modelo modelo) {
         this();
         this.principal = principal;
-        this.modelo = modelo;
-        this.preencherTela(modelo);
+        this.objeto = modelo;
+        this.preencherTela((Modelo) objeto);
     }
 
     /**
@@ -302,7 +303,7 @@ public class CadastroModelo extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "Visualização de Modelo");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();

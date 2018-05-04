@@ -6,6 +6,8 @@
 package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
+import enun.Legenda;
+import fabrica.FabricaAbstrata;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
@@ -21,12 +23,11 @@ import service.OnibusService;
  *
  * @author Lenovo
  */
-public class CadastroOnibus extends javax.swing.JInternalFrame {
+public class CadastroOnibus extends FabricaAbstrata {
 
-    private JDesktopPane principal;
     private Vector<String> cabecalho;
     private Vector detalhe;
-    private Onibus onibus;
+    private Legenda legenda = Legenda.ONIBUS;
     
     public CadastroOnibus() {
         initComponents();
@@ -40,8 +41,8 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     public CadastroOnibus(JDesktopPane principal, Onibus onibus) {
         this();
         this.principal = principal;
-        this.onibus = onibus;
-        this.preencherTela(onibus);
+        this.objeto = onibus;
+        this.preencherTela((Onibus) objeto);
     }
 
     /**
@@ -284,7 +285,7 @@ public class CadastroOnibus extends javax.swing.JInternalFrame {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "Visualização de Ônibus");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();

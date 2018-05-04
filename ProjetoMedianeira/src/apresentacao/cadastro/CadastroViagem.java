@@ -6,6 +6,8 @@
 package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
+import enun.Legenda;
+import fabrica.FabricaAbstrata;
 import interfaces.ITabelaViagem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -26,12 +28,11 @@ import util.Validacao;
  *
  * @author Lenovo
  */
-public class CadastroViagem extends javax.swing.JInternalFrame implements ITabelaViagem{
+public class CadastroViagem extends FabricaAbstrata implements ITabelaViagem{
 
-    private JDesktopPane principal;
     private Vector<String> cabecalho;
     private Vector detalhe;
-    private Viagem viagem;
+    private Legenda legenda = Legenda.VIAGEM;
     
     public CadastroViagem() {
         initComponents();
@@ -46,8 +47,8 @@ public class CadastroViagem extends javax.swing.JInternalFrame implements ITabel
     public CadastroViagem(JDesktopPane principal, Viagem viagem) {
         this();
         this.principal = principal;
-        this.viagem = viagem;
-        this.preencherTela(viagem);
+        this.objeto = viagem;
+        this.preencherTela((Viagem) objeto);
     }   
     /**
      * This method is called from within the constructor to initialize the form.
@@ -323,7 +324,7 @@ public class CadastroViagem extends javax.swing.JInternalFrame implements ITabel
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), "Visualização de Viagem");
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();

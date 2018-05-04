@@ -2,6 +2,8 @@ package apresentacao.venda;
 
 import apresentacao.TelaPesquisa;
 import apresentacao.TelaPoltrona;
+import enun.Legenda;
+import fabrica.FabricaAbstrata;
 import interfaces.ITabelaViagem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -15,13 +17,12 @@ import persistencia.PoltronaDao;
 import service.PassagemService;
 import service.ViagemService;
 
-public class VendaPassagem extends javax.swing.JInternalFrame implements ITabelaViagem{
+public class VendaPassagem extends FabricaAbstrata implements ITabelaViagem{
 
     private Viagem viagem;
-    private JDesktopPane principal;
     private Vector<String> cabecalho;
     private Vector detalhe;
-    private Passagem passagem;
+    private Legenda legenda = Legenda.PASSAGEM;
     
     public VendaPassagem() {
         initComponents();
@@ -35,17 +36,17 @@ public class VendaPassagem extends javax.swing.JInternalFrame implements ITabela
     public VendaPassagem(JDesktopPane principal, Passagem passagem) {
         this();
         this.principal = principal;
-        this.passagem = passagem;
+        this.objeto = passagem;
         this.viagem = new Viagem(passagem);
-        this.preencherTela(passagem);
+        this.preencherTela((Passagem) objeto);
     }
     
     public VendaPassagem(JDesktopPane principal, Passagem passagem, int num) {
         this();
         this.principal = principal;
-        this.passagem = passagem;
+        this.objeto = passagem;
         this.viagem = new Viagem(passagem);
-        this.preencherTela(passagem);
+        this.preencherTela((Passagem) objeto);
         jTextFieldPoltrona.setText(num + "");
     }
 
@@ -392,7 +393,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame implements ITabela
     private void jButtonPesquisarPassagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarPassagemActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem", "Visualização de Passagem");
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem", legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -472,7 +473,7 @@ public class VendaPassagem extends javax.swing.JInternalFrame implements ITabela
             Vector[] vet = this.preencherTabela(detalhe, cabecalho);
             cabecalho = vet[0];
             detalhe = vet[1];
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, this.printTela(), "Visualização de Viagens");
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, this.printTela(), Legenda.VIAGENS);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();

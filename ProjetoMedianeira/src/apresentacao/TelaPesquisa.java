@@ -1,50 +1,35 @@
 package apresentacao;
 
-import apresentacao.cadastro.CadastroViagem;
-import apresentacao.cadastro.CadastroOnibus;
-import apresentacao.cadastro.CadastroMotorista;
-import apresentacao.cadastro.CadastroModelo;
-import apresentacao.venda.VendaPassagem;
+import enun.Legenda;
+import fabrica.FabricaAbstrata;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Modelo;
-import model.Motorista;
-import model.Onibus;
-import model.Passagem;
-import model.Viagem;
-import service.ModeloService;
-import service.MotoristaService;
-import service.OnibusService;
-import service.PassagemService;
-import service.ViagemService;
 
 public class TelaPesquisa extends javax.swing.JInternalFrame {
     
     private JDesktopPane principal;
     private String titulo;
-    private Onibus onibus;
-    private Motorista motorista;
-    private Viagem viagem;
+    private Legenda legenda;
     private Object object;
     
-    public TelaPesquisa(String titulo) {
+    public TelaPesquisa(Legenda legenda) {
         initComponents();
-        this.titulo = titulo;
-        this.setTitle(titulo);
+        this.legenda = legenda;
+        this.setTitle(legenda.getTituloGrid());
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Object object, String titulo) {
-        this(titulo);
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Object object, Legenda legenda) {
+        this(legenda);
         this.object = object;
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, String titulo) {
-        this(titulo);
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Legenda legenda) {
+        this(legenda);
         this.principal = principal;
         jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
     }
@@ -139,28 +124,10 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
         try {
             JInternalFrame tela = null;
-            if(null != titulo)switch (titulo) {
-                case "Visualização de Motorista":
-                    tela = new CadastroMotorista(principal);
-                    break;
-                case "Visualização de Modelo":
-                    tela = new CadastroModelo(principal);
-                    break;
-                case "Visualização de Ônibus":
-                    tela = new CadastroOnibus(principal);
-                    break;
-                case "Visualização de Viagem":
-                    tela = new CadastroViagem(principal);
-                    break;
-                case "Visualização de Viagens":
-                    tela = new VendaPassagem(principal);
-                    break;
-                case "Visualização de Passagem":
-                    tela = new VendaPassagem(principal);
-                    break;
-                default:
-                    break;
-            }
+            
+            if(null != legenda)
+                tela = FabricaAbstrata.getInstance(legenda, principal);
+            
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -174,37 +141,10 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
             JInternalFrame tela = null;
             int linha = jTable1.getSelectedRow();
             
-            if(titulo == "Visualização de Motorista"){
-                String codigo = jTable1.getValueAt(linha, 0).toString();
-                Motorista motorista = new MotoristaService().visualizarUm(Integer.parseInt(codigo));
-                tela = new CadastroMotorista(principal, motorista);
-            }
-            else if(titulo == "Visualização de Modelo"){
-                String codigo = jTable1.getValueAt(linha, 0).toString();
-                Modelo modelo = new ModeloService().visualizarUm(Integer.parseInt(codigo));
-                tela = new CadastroModelo(principal, modelo);
-            }
-            else if(titulo == "Visualização de Ônibus"){
-                String codigo = jTable1.getValueAt(linha, 0).toString();
-                Onibus onibus = new OnibusService().visualizarUm(codigo);
-                tela = new CadastroOnibus(principal, onibus);
-            }
-            else if(titulo == "Visualização de Viagem"){
-                String codigo = jTable1.getValueAt(linha, 0).toString();
-                Viagem viagem = new ViagemService().visualizarUm(Integer.parseInt(codigo));
-                tela = new CadastroViagem(principal, viagem);
-            }
-            else if(titulo == "Visualização de Viagens"){
-                String codigo = jTable1.getValueAt(linha, 0).toString();
-                Viagem viagem = new ViagemService().visualizarUm(Integer.parseInt(codigo));
-                tela = new VendaPassagem(principal, new Passagem(viagem));
-            }
-            else if(titulo == "Visualização de Passagem"){
-                String codigoV = jTable1.getValueAt(linha, 0).toString();
-                String codigoP = jTable1.getValueAt(linha, 3).toString();
-                Passagem passagem = new PassagemService().visualizarUm(new Integer(codigoP), new Integer(codigoV));
-                tela = new VendaPassagem(principal, passagem);
-            }
+            String codigo = jTable1.getValueAt(linha, 0).toString();
+            String codigoP = jTable1.getValueAt(linha, 3).toString();
+            tela = FabricaAbstrata.getInstance(legenda, principal, codigo, codigoP);
+
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();

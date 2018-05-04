@@ -1,6 +1,8 @@
 package model;
 
-public class Modelo {
+import interfaces.IOrdenacao;
+
+public class Modelo implements IOrdenacao<Modelo>{
     //Atributos
     private String marca;
     private String geracao;
@@ -94,5 +96,25 @@ public class Modelo {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void set(Modelo t) throws Exception {
+        this.marca = t.marca;
+        this.geracao = t.geracao;
+        this.modelo = t.modelo;
+        this.tipo = t.tipo;
+        this.poltrona = t.poltrona;
+        this.id = t.id;
+    }
+
+    @Override
+    public String atributoIndentificador() throws Exception {
+        return this.getId() + "";
+    }
+
+    @Override
+    public String atributoDescricao_Nome() throws Exception {
+        return this.marca;
     }
 }
