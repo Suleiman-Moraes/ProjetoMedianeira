@@ -1,5 +1,8 @@
 package model;
-public class Motorista {
+
+import interfaces.IOrdenacao;
+
+public class Motorista implements IOrdenacao<Motorista>{
     //Atributos
     private String nome;
     private String localizacao;
@@ -75,5 +78,20 @@ public class Motorista {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void set(Motorista t) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String atributoIndentificador() throws Exception {
+        return this.getId() + "";
+    }
+
+    @Override
+    public String atributoDescricao_Nome() throws Exception {
+        return this.getNome();
     }
 }

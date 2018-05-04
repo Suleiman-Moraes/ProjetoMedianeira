@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class Passagem extends Viagem{
+public class Passagem extends Viagem {
     //Atributos
     private String nome;
     private String cpf;
@@ -67,5 +67,10 @@ public class Passagem extends Viagem{
 
     public void setNumeroPlotrona(int numeroPlotrona) {
         this.numeroPlotrona = numeroPlotrona;
+    }
+    
+    @Override
+    public String atributoDescricao_Nome() throws Exception {
+        return this.getNome();
     }
 }

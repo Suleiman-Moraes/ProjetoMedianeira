@@ -2,10 +2,11 @@ package util;
 
 import interfaces.IOrdenacao;
 import java.util.List;
+import java.util.Vector;
 
 public abstract class ClasseOrdenacao{
     
-    public List bolha(List<IOrdenacao> vetor) throws Exception{
+    public Vector bolha(Vector<IOrdenacao> vetor) throws Exception{
         int i, j;
         IOrdenacao aux = null;
         boolean troca = false;

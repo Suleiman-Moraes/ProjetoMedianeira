@@ -1,8 +1,9 @@
 package model;
 
+import interfaces.IOrdenacao;
 import java.util.Date;
 
-public class Viagem {
+public class Viagem implements IOrdenacao<Viagem>{
     //Atributos
     protected Date dataSaida;
     protected boolean turno;
@@ -99,5 +100,20 @@ public class Viagem {
 
     public void setValor(float valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public void set(Viagem t) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String atributoIndentificador() throws Exception {
+        return this.getId() + "";
+    }
+
+    @Override
+    public String atributoDescricao_Nome() throws Exception {
+        return this.getDe();
     }
 }

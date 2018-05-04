@@ -1,8 +1,9 @@
 package model;
 
+import interfaces.IOrdenacao;
 import java.util.Objects;
 
-public class Onibus {
+public class Onibus implements IOrdenacao<Onibus>{
     //Atributos
     private String numero;
     private String ano;
@@ -69,5 +70,20 @@ public class Onibus {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void set(Onibus t) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String atributoIndentificador() throws Exception {
+        return this.getNumero();
+    }
+
+    @Override
+    public String atributoDescricao_Nome() throws Exception {
+        return this.getModelo().getMarca();
     }
 }
