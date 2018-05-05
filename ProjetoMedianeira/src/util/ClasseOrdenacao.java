@@ -1,23 +1,21 @@
 package util;
 
-import interfaces.IOrdenacao;
-import java.util.List;
 import java.util.Vector;
 
 public abstract class ClasseOrdenacao{
     
-    public Vector bolha(Vector<IOrdenacao> vetor) throws Exception{
+    public Vector bolha(Vector<Vector> vetor) throws Exception{
         int i, j;
-        IOrdenacao aux = null;
+        Vector aux = null;
         boolean troca = false;
         for (i = vetor.size() - 1; i > 0; i--) {
             troca = false;
             
             for (j = 0; j < i; j++) {
                 if(!(compara(vetor.get(j), vetor.get(j + 1)))){
-                    aux.set(vetor.get(j));
-                    vetor.get(j).set(vetor.get(j + 1));
-                    vetor.get(j + 1).set(aux);
+                    aux = vetor.get(j);
+                    vetor.set(j, vetor.get(j + 1));
+                    vetor.set(j + 1, aux);
                     troca = true;
                 }
             }
@@ -28,5 +26,5 @@ public abstract class ClasseOrdenacao{
         return vetor;
     }
 
-    public abstract boolean compara(IOrdenacao a, IOrdenacao b)throws Exception;
+    public abstract boolean compara(Vector a, Vector b)throws Exception;
 }

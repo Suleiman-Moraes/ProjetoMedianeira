@@ -8,8 +8,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import util.ClasseOrdenacao;
-import util.OrdenarDescricao_NomeID;
-import util.OrdenarIDDescricao_Nome;
+import util.Ordenar;
+import util.OrdenarID;
 
 public class TelaPesquisa extends javax.swing.JInternalFrame {
     
@@ -33,6 +33,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         this.cabecalho = cabecalho;
         this.detalhe = detalhe;
         popularGrid();
+        this.popularCombo();
     }
     
     public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Legenda legenda) {
@@ -41,6 +42,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         this.cabecalho = cabecalho;
         this.detalhe = detalhe;
         popularGrid();
+        this.popularCombo();
     }
     
     /**
@@ -89,7 +91,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         });
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECIONE", "CÓDIGO", "NOME/DESCRIÇÃO" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECIONE" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -175,13 +177,13 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         try {
-            ClasseOrdenacao ordena = null;
-            if(jComboBox1.getSelectedIndex() == 1){
-                ordena = new OrdenarIDDescricao_Nome();
-                detalhe = ordena.bolha(detalhe);
-                popularGrid();
-            }else if(jComboBox1.getSelectedIndex() == 2){
-                ordena = new OrdenarDescricao_NomeID();
+            if(jComboBox1.getSelectedIndex() != 0){
+                ClasseOrdenacao ordena = null;
+                if(jComboBox1.getSelectedIndex() == 1){
+                    ordena = new OrdenarID();
+                }else{
+                    ordena = new Ordenar(jComboBox1.getSelectedIndex() - 1);
+                }
                 detalhe = ordena.bolha(detalhe);
                 popularGrid();
             }
@@ -201,4 +203,10 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void popularCombo() {
+        for(String v :cabecalho){
+            jComboBox1.addItem(v);
+        }
+    }
 }
