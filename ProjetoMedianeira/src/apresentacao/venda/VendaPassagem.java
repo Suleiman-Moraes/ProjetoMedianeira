@@ -485,10 +485,10 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
     private void validaCampos() throws Exception{
         if(jTextFieldNome.getText().trim().isEmpty())
             throw new Exception("Insira o Nome.");
-        if(jTextFieldPoltrona.getText().trim().isEmpty())
-            throw new Exception("Insira Poltrona.");
         if(jFormattedTextFieldCpf.getText().trim().length() != 14)
             throw new Exception("Insira o CPF.");
+        if(jTextFieldPoltrona.getText().trim().isEmpty() || jTextFieldPoltrona.getText().trim().equals("0"))
+            throw new Exception("Insira Poltrona.");
 
         if(viagem == null) throw new Exception("Escolha uma Viagem.");;
     }
@@ -513,6 +513,8 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
     private void limparTela(){
         this.limparTelaPassagem();
         this.limparTelaviagem();
+        this.viagem = null;
+        this.objeto = null;
         jButtonExcluir.setEnabled(false);
     }
     
