@@ -19,12 +19,12 @@ import service.OnibusService;
 import service.PassagemService;
 import service.ViagemService;
 
-public abstract class FabricaAbstrata extends JInternalFrame{
+public abstract class Fabrica extends JInternalFrame{
     protected JDesktopPane principal;
     protected Object objeto;
 
-    public static FabricaAbstrata getInstance(Legenda legenda, JDesktopPane principal, Object ...objeto)throws Exception{
-        FabricaAbstrata ff = null;
+    public static Fabrica getInstance(Legenda legenda, JDesktopPane principal, Object ...objeto)throws Exception{
+        Fabrica ff = null;
         switch (legenda){
             case MODELO:
                 Modelo objet = new ModeloService().visualizarUm(new Integer((String) objeto[0]));
@@ -57,8 +57,8 @@ public abstract class FabricaAbstrata extends JInternalFrame{
         return ff;
     }
     
-    public static FabricaAbstrata getInstance(Legenda legenda, JDesktopPane principal)throws Exception{
-        FabricaAbstrata ff = (FabricaAbstrata) Class.forName(legenda.getPacote()+legenda.getClasse()).newInstance();
+    public static Fabrica getInstance(Legenda legenda, JDesktopPane principal)throws Exception{
+        Fabrica ff = (Fabrica) Class.forName(legenda.getPacote()+legenda.getClasse()).newInstance();
         ff.setPrincipal(principal);
         return ff;
     }

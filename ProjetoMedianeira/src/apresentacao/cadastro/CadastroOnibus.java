@@ -7,7 +7,7 @@ package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
 import enun.Legenda;
-import fabrica.FabricaAbstrata;
+import fabrica.Fabrica;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
@@ -23,7 +23,7 @@ import service.OnibusService;
  *
  * @author Lenovo
  */
-public class CadastroOnibus extends FabricaAbstrata {
+public class CadastroOnibus extends Fabrica {
 
     private Vector<String> cabecalho;
     private Vector detalhe;

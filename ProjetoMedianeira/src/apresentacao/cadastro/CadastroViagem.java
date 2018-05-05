@@ -7,7 +7,7 @@ package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
 import enun.Legenda;
-import fabrica.FabricaAbstrata;
+import fabrica.Fabrica;
 import interfaces.ITabelaViagem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -28,7 +28,7 @@ import util.Validacao;
  *
  * @author Lenovo
  */
-public class CadastroViagem extends FabricaAbstrata implements ITabelaViagem{
+public class CadastroViagem extends Fabrica implements ITabelaViagem{
 
     private Vector<String> cabecalho;
     private Vector detalhe;

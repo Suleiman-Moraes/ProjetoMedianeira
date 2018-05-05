@@ -3,7 +3,7 @@ package apresentacao.venda;
 import apresentacao.TelaPesquisa;
 import apresentacao.TelaPoltrona;
 import enun.Legenda;
-import fabrica.FabricaAbstrata;
+import fabrica.Fabrica;
 import interfaces.ITabelaViagem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -17,7 +17,7 @@ import persistencia.PoltronaDao;
 import service.PassagemService;
 import service.ViagemService;
 
-public class VendaPassagem extends FabricaAbstrata implements ITabelaViagem{
+public class VendaPassagem extends Fabrica implements ITabelaViagem{
 
     private Viagem viagem;
     private Vector<String> cabecalho;

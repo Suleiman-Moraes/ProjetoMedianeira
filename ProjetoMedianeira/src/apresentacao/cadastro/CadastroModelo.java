@@ -7,7 +7,7 @@ package apresentacao.cadastro;
 
 import apresentacao.TelaPesquisa;
 import enun.Legenda;
-import fabrica.FabricaAbstrata;
+import fabrica.Fabrica;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -18,7 +18,7 @@ import service.ModeloService;
  *
  * @author Lenovo
  */
-public class CadastroModelo extends FabricaAbstrata {
+public class CadastroModelo extends Fabrica {
 
     private Vector<String> cabecalho;
     private Vector detalhe;

@@ -1,7 +1,7 @@
 package apresentacao;
 
 import enun.Legenda;
-import fabrica.FabricaAbstrata;
+import fabrica.Fabrica;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -149,7 +149,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
             JInternalFrame tela = null;
             
             if(null != legenda)
-                tela = FabricaAbstrata.getInstance(legenda, principal);
+                tela = Fabrica.getInstance(legenda, principal);
             
             principal.add(tela);
             tela.setVisible(true);
@@ -165,7 +165,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
             int linha = jTable1.getSelectedRow();
             String codigo = jTable1.getValueAt(linha, 0).toString();
             String codigoP = jTable1.getValueAt(linha, 3).toString();
-            tela = FabricaAbstrata.getInstance(legenda, principal, codigo, codigoP);
+            tela = Fabrica.getInstance(legenda, principal, codigo, codigoP);
 
             principal.add(tela);
             tela.setVisible(true);
