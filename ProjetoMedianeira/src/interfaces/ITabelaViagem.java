@@ -2,6 +2,7 @@ package interfaces;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import model.Viagem;
@@ -30,7 +31,9 @@ public interface ITabelaViagem {
             
             detalhe = new Vector();
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            for(Viagem viagem : listaViagem()){
+            Iterator<Viagem> lista = listaViagem();
+            while(lista.hasNext()){
+                Viagem viagem = lista.next();
                 Vector<String> linha = new Vector();
                 
                 linha.add(viagem.getId() + "");
@@ -64,5 +67,5 @@ public interface ITabelaViagem {
         }   
     }
     
-    List<Viagem> listaViagem()throws SQLException;
+    Iterator<Viagem> listaViagem()throws SQLException;
 }
