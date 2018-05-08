@@ -34,7 +34,7 @@ public class TesteOnibus {
             System.out.println("Deletado com sucesso!\n\n\n");
             leia.nextLine();
             
-            service.visualizarAll().forEach(x -> System.out.println("Numero: " + x.getNumero() + " || Ano: " + x.getAno()));
+            service.visualizarAll().forEachRemaining(x -> System.out.println("Numero: " + x.getNumero() + " || Ano: " + x.getAno()));
             System.out.println("Listado com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());

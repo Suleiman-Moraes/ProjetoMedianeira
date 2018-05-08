@@ -34,7 +34,7 @@ public class TesteModelo {
             System.out.println("Deletado com sucesso!\n\n\n");
             leia.nextLine();
             
-            service.visualizarAll().forEach(x -> System.out.println("Id: " + x.getId() + " || Marca: " + x.getMarca()));
+            service.visualizarAll().forEachRemaining(x -> System.out.println("Id: " + x.getId() + " || Marca: " + x.getMarca()));
             System.out.println("Listado com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());

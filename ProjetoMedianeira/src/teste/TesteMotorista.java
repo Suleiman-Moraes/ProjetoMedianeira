@@ -27,7 +27,7 @@ public class TesteMotorista {
             service.deletar(y.getId());
             System.out.println("Deletado com sucesso!\n\n\n");
             
-            service.visualizarAll().forEach(x -> System.out.println("Id: " + x.getId() + " || Nome: " + x.getNome()));
+            service.visualizarAll().forEachRemaining(x -> System.out.println("Id: " + x.getId() + " || Nome: " + x.getNome()));
             System.out.println("Listado com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());

@@ -41,7 +41,7 @@ public class TesteViagem {
             System.out.println("Deletado com sucesso!\n\n\n");
             leia.nextLine();
             
-            service.visualizarAll().forEach(x -> System.out.println("Id: " + x.getId() + " || Ate: " + x.getAte()));
+            service.visualizarAll().forEachRemaining(x -> System.out.println("Id: " + x.getId() + " || Ate: " + x.getAte()));
             System.out.println("Listado com sucesso!");
             
             Calendar calendar = Calendar.getInstance();
