@@ -11,6 +11,7 @@ import fabrica.Fabrica;
 import interfaces.ITabelaViagem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -471,8 +472,8 @@ public class CadastroViagem extends Fabrica implements ITabelaViagem{
     
     public DefaultComboBoxModel preencherComboOnibus(){
         try {
-            List<Onibus> lista = new OnibusService().visualizarAll();
-            Vector veto = new Vector(lista);
+            Vector veto = new Vector();
+            new OnibusService().visualizarAll().forEachRemaining(x -> veto.add(x));
             
             DefaultComboBoxModel<String> itens = new DefaultComboBoxModel<>(veto);
             return itens;
@@ -484,8 +485,8 @@ public class CadastroViagem extends Fabrica implements ITabelaViagem{
     
     public DefaultComboBoxModel preencherComboModtorista(){
         try {
-            List<Motorista> lista = new MotoristaService().visualizarAll();
-            Vector veto = new Vector(lista);
+            Vector veto = new Vector();
+            new MotoristaService().visualizarAll().forEachRemaining(x -> veto.add(x));
             
             DefaultComboBoxModel<String> itens = new DefaultComboBoxModel<>(veto);
             return itens;
@@ -519,7 +520,7 @@ public class CadastroViagem extends Fabrica implements ITabelaViagem{
     }
     
     @Override
-    public List<Viagem> listaViagem() throws SQLException {
+    public Iterator<Viagem> listaViagem() throws SQLException {
         return new ViagemService().visualizarAll();
     }
 

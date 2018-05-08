@@ -3,6 +3,7 @@ package apresentacao.cadastro;
 import apresentacao.TelaPesquisa;
 import enun.Legenda;
 import fabrica.Fabrica;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -331,7 +332,7 @@ public class CadastroMotorista extends Fabrica {
             getCabecalho().add("CNH");
             
             detalhe = new Vector();
-            for(Motorista tipo : new MotoristaService().visualizarAll()){
+            new MotoristaService().visualizarAll().forEachRemaining(tipo -> {
                 Vector<String> linha = new Vector();
                 
                 linha.add(tipo.getId() + "");
@@ -339,7 +340,7 @@ public class CadastroMotorista extends Fabrica {
                 linha.add(tipo.getLocalizacao());
                 linha.add(tipo.getCnh());
                 getDetalhe().add(linha);
-            }
+            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   

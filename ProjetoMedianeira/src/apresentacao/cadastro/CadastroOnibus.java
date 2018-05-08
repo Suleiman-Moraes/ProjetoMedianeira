@@ -364,8 +364,8 @@ public class CadastroOnibus extends Fabrica {
     
     public DefaultComboBoxModel preencherComboModelo(){
         try {
-            List<Modelo> lista = new ModeloService().visualizarAll();
-            Vector veto = new Vector(lista);
+            Vector veto = new Vector();
+            new ModeloService().visualizarAll().forEachRemaining(x -> veto.add(x));
             
             DefaultComboBoxModel<String> itens = new DefaultComboBoxModel<>(veto);
             return itens;
@@ -387,7 +387,7 @@ public class CadastroOnibus extends Fabrica {
             getCabecalho().add("Poltrona");
             
             detalhe = new Vector();
-            for(Onibus onibus : new OnibusService().visualizarAll()){
+            new OnibusService().visualizarAll().forEachRemaining(onibus -> {
                 Vector<String> linha = new Vector();
                 
                 linha.add(onibus.getNumero()+ "");
@@ -399,7 +399,7 @@ public class CadastroOnibus extends Fabrica {
                 linha.add(onibus.getModelo().getPoltrona() + "");
                 
                 getDetalhe().add(linha);
-            }
+            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   

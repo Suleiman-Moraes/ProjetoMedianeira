@@ -8,6 +8,7 @@ package apresentacao.cadastro;
 import apresentacao.TelaPesquisa;
 import enun.Legenda;
 import fabrica.Fabrica;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -368,7 +369,9 @@ public class CadastroModelo extends Fabrica {
             getCabecalho().add("Poltrona");
             
             detalhe = new Vector();
-            for(Modelo modelo : new ModeloService().visualizarAll()){
+            Iterator<Modelo> lista = new ModeloService().visualizarAll();
+            while(lista.hasNext()){
+                Modelo modelo = lista.next();
                 Vector<String> linha = new Vector();
                 
                 linha.add(modelo.getId() + "");
