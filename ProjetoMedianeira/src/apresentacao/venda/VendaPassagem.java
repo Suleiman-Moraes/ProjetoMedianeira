@@ -7,6 +7,7 @@ import fabrica.Fabrica;
 import interfaces.ITabelaViagem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
@@ -605,7 +606,7 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
             detalhe = new Vector();
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             
-            for(Passagem passagem : new PassagemService().visualizarAll()){
+            new PassagemService().visualizarAll().forEachRemaining(passagem -> {
                 Vector<String> linha = new Vector();
                 
                 linha.add(passagem.getId() + "");
@@ -627,14 +628,14 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
                 linha.add(passagem.getOnibus().getModelo().getTipo());
                 
                 detalhe.add(linha);
-            }
+            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
     
     @Override
-    public List<Viagem> listaViagem() throws SQLException {
+    public Iterator<Viagem> listaViagem() throws SQLException {
         return new ViagemService().visualizarAPartirDeHoje();
     }
 
