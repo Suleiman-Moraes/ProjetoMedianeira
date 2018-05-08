@@ -2,6 +2,7 @@ package service;
 
 import interfaces.ICrudService;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import model.Modelo;
 import persistencia.ModeloDao;
@@ -34,7 +35,7 @@ public class ModeloService implements ICrudService<Modelo>{
     }
 
     @Override
-    public List<Modelo> visualizarAll() throws SQLException {
-        return new ModeloDao().visualizarAll();
+    public Iterator<Modelo> visualizarAll() throws SQLException {
+        return new ModeloDao().visualizarAll().iterator();
     }
 }

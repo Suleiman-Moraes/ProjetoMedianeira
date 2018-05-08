@@ -2,6 +2,7 @@ package service;
 
 import interfaces.ICrudService;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import model.Motorista;
 import persistencia.MotoristaDao;
@@ -31,8 +32,8 @@ public class MotoristaService implements ICrudService<Motorista>{
     }
 
     @Override
-    public List<Motorista> visualizarAll() throws SQLException {
-        return new MotoristaDao().visualizarAll();
+    public Iterator<Motorista> visualizarAll() throws SQLException {
+        return new MotoristaDao().visualizarAll().iterator();
     }
     
     public boolean buscarMotoristaComMesmaCNH(String cnh) throws SQLException{

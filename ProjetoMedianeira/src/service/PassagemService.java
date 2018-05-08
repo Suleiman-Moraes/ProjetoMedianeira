@@ -2,7 +2,7 @@ package service;
 
 import interfaces.ICrudService;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Iterator;
 import model.Passagem;
 import persistencia.PassagemDao;
 
@@ -26,8 +26,8 @@ public class PassagemService implements ICrudService<Passagem>{
     }
 
     @Override
-    public List<Passagem> visualizarAll() throws SQLException {
-        return new PassagemDao().visualizarAll();
+    public Iterator<Passagem> visualizarAll() throws SQLException {
+        return new PassagemDao().visualizarAll().iterator();
     }
     
 }

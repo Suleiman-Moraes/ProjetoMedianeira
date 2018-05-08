@@ -1,11 +1,11 @@
 package interfaces;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Iterator;
 
 public interface ICrudService<T> {
     void salvar(T t)throws Exception;
     void deletar(Object ...object) throws SQLException;
     T visualizarUm(Object ...object) throws SQLException;
-    List<T> visualizarAll()throws SQLException;
+    Iterator<T> visualizarAll()throws SQLException;
 }

@@ -2,7 +2,7 @@ package service;
 
 import interfaces.ICrudService;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Iterator;
 import model.Onibus;
 import persistencia.OnibusDao;
 
@@ -25,8 +25,8 @@ public class OnibusService implements ICrudService<Onibus>{
     }
 
     @Override
-    public List<Onibus> visualizarAll() throws SQLException {
-        return new OnibusDao().visualizarAll();
+    public Iterator<Onibus> visualizarAll() throws SQLException {
+        return new OnibusDao().visualizarAll().iterator();
     }
     
     public boolean existe(String numero) throws SQLException{

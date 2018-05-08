@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import model.Motorista;
 import model.Onibus;
@@ -49,8 +50,8 @@ public class ViagemService implements ICrudService<Viagem> {
     }
 
     @Override
-    public List<Viagem> visualizarAll() throws SQLException {
-        return new ViagemDao().visualizarAll();
+    public Iterator<Viagem> visualizarAll() throws SQLException {
+        return new ViagemDao().visualizarAll().iterator();
     }
     
     public List<Viagem> visualizarAPartirDeHoje() throws SQLException {
