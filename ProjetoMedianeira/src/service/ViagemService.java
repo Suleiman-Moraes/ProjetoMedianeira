@@ -54,8 +54,8 @@ public class ViagemService implements ICrudService<Viagem> {
         return new ViagemDao().visualizarAll().iterator();
     }
     
-    public List<Viagem> visualizarAPartirDeHoje() throws SQLException {
-        return new ViagemDao().visualizarAPartirDeHoje();
+    public Iterator<Viagem> visualizarAPartirDeHoje() throws SQLException {
+        return new ViagemDao().visualizarAPartirDeHoje().iterator();
     }
 
     public boolean retornarDisponibilidade(Motorista motorista, Date data, String de) throws SQLException {
