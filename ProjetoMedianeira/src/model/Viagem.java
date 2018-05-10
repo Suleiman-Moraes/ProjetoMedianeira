@@ -1,9 +1,12 @@
 package model;
 
+import interfaces.IDesmaterializar;
 import interfaces.IOrdenacao;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 
-public class Viagem implements IOrdenacao<Viagem>{
+public class Viagem implements IOrdenacao<Viagem>, IDesmaterializar{
     //Atributos
     protected Date dataSaida;
     protected boolean turno;
@@ -115,5 +118,31 @@ public class Viagem implements IOrdenacao<Viagem>{
     @Override
     public String atributoDescricao_Nome() throws Exception {
         return this.getDe();
+    }
+
+    @Override
+    public Vector<String> desmaterializar() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Vector<String> linha = new Vector();
+                
+        linha.add(getId() + "");
+        linha.add(format.format(getDataSaida()));
+        linha.add(getDe());
+        linha.add(getAte());
+        if(getTurno())
+            linha.add("Manhã");
+        else linha.add("Noite");
+        linha.add("R$"+getValor());
+        linha.add(getMotorista().getNome());
+        linha.add(getMotorista().getLocalizacao());
+        linha.add(getMotorista().getCnh());
+        linha.add(getOnibus().getNumero()+ "");
+        linha.add(getOnibus().getAno());
+        linha.add(getOnibus().getModelo().getMarca());
+        linha.add(getOnibus().getModelo().getModelo());
+        linha.add(getOnibus().getModelo().getGeracao());
+        linha.add(getOnibus().getModelo().getTipo());
+        linha.add(getOnibus().getModelo().getPoltrona() + "");
+        return linha;
     }
 }

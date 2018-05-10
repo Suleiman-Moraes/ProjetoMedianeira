@@ -22,7 +22,7 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
 
     private Viagem viagem;
     private Vector<String> cabecalho;
-    private Vector detalhe;
+    private Iterator detalhe;
     private Legenda legenda = Legenda.PASSAGEM;
     
     public VendaPassagem() {
@@ -393,8 +393,8 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
 
     private void jButtonPesquisarPassagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarPassagemActionPerformed
         try {
-            preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, "viagem", legenda);
+            preencherTable();
+            TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, new PassagemService().visualizarAll(), this.printTela(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -471,9 +471,9 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
 
     private void jButtonPesquisarViagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarViagemActionPerformed
         try {
-            Vector[] vet = this.preencherTabela(detalhe, cabecalho);
-            cabecalho = vet[0];
-            detalhe = vet[1];
+            Object[] vet = this.preencherTabela();
+            cabecalho = (Vector<String>) vet[0];
+            detalhe = (Iterator) vet[1];
             TelaPesquisa tela = new TelaPesquisa(principal, cabecalho, detalhe, this.printTela(), Legenda.VIAGENS);
             principal.add(tela);
             tela.setVisible(true);
@@ -584,7 +584,7 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
         }
     }
     
-    public void preencherTabela() {
+    public void preencherTable() {
         try {
             cabecalho = new Vector();
             cabecalho.add("Cod. Viagem");
@@ -602,33 +602,6 @@ public class VendaPassagem extends Fabrica implements ITabelaViagem{
             cabecalho.add("Modelo");
             cabecalho.add("Geração");
             cabecalho.add("Tipo");
-            
-            detalhe = new Vector();
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            
-            new PassagemService().visualizarAll().forEachRemaining(passagem -> {
-                Vector<String> linha = new Vector();
-                
-                linha.add(passagem.getId() + "");
-                linha.add(passagem.getNome());
-                linha.add(passagem.getCpf());
-                linha.add(passagem.getNumeroPlotrona() + "");
-                linha.add(format.format(passagem.getDataSaida()));
-                linha.add(passagem.getDe());
-                linha.add(passagem.getAte());
-                if(passagem.getTurno())
-                    linha.add("Manhã");
-                else linha.add("Noite");
-                linha.add("R$"+passagem.getValor());
-                linha.add(passagem.getMotorista().getNome());
-                linha.add(passagem.getOnibus().getNumero()+ "");
-                linha.add(passagem.getOnibus().getModelo().getMarca());
-                linha.add(passagem.getOnibus().getModelo().getModelo());
-                linha.add(passagem.getOnibus().getModelo().getGeracao());
-                linha.add(passagem.getOnibus().getModelo().getTipo());
-                
-                detalhe.add(linha);
-            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }

@@ -2,6 +2,8 @@ package apresentacao;
 
 import enun.Legenda;
 import fabrica.Fabrica;
+import interfaces.IDesmaterializar;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -18,7 +20,8 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     private Legenda legenda;
     private Object object;
     private Vector<String> cabecalho;
-    private Vector detalhe;
+    private Iterator detalhe;
+    private DefaultTableModel model;
     
     public TelaPesquisa(Legenda legenda) {
         initComponents();
@@ -26,7 +29,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         this.setTitle(legenda.getTituloGrid());
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Object object, Legenda legenda) {
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Iterator detalhe, Object object, Legenda legenda) {
         this(legenda);
         this.object = object;
         this.principal = principal;
@@ -36,7 +39,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         this.popularCombo();
     }
     
-    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Vector detalhe, Legenda legenda) {
+    public TelaPesquisa(JDesktopPane principal, Vector<String> cabecalho, Iterator detalhe, Legenda legenda) {
         this(legenda);
         this.principal = principal;
         this.cabecalho = cabecalho;
@@ -184,7 +187,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
                 }else{
                     ordena = new Ordenar(jComboBox1.getSelectedIndex() - 1);
                 }
-                detalhe = ordena.bolha(detalhe);
+                detalhe = ordena.bolha(legenda);
                 popularGrid();
             }
         } catch (Exception e) {
@@ -193,7 +196,13 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void popularGrid(){
-        jTable1.setModel(new DefaultTableModel(detalhe, cabecalho));
+        model = new DefaultTableModel(null, cabecalho);
+        jTable1.setModel(model);
+        model.setNumRows(0);
+        while(detalhe.hasNext()){
+            IDesmaterializar x = (IDesmaterializar) detalhe.next();
+            model.addRow(x.desmaterializar());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

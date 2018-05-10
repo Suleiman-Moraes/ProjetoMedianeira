@@ -1,9 +1,11 @@
 package model;
 
+import interfaces.IDesmaterializar;
 import interfaces.IOrdenacao;
 import java.util.Objects;
+import java.util.Vector;
 
-public class Onibus implements IOrdenacao<Onibus>{
+public class Onibus implements IOrdenacao<Onibus>, IDesmaterializar{
     //Atributos
     private String numero;
     private String ano;
@@ -85,5 +87,19 @@ public class Onibus implements IOrdenacao<Onibus>{
     @Override
     public String atributoDescricao_Nome() throws Exception {
         return this.getModelo().getMarca();
+    }
+
+    @Override
+    public Vector<String> desmaterializar() {
+        Vector<String> linha = new Vector();
+                
+        linha.add(getNumero()+ "");
+        linha.add(getAno());
+        linha.add(getModelo().getMarca());
+        linha.add(getModelo().getModelo());
+        linha.add(getModelo().getGeracao());
+        linha.add(getModelo().getTipo());
+        linha.add(getModelo().getPoltrona() + "");
+        return linha;
     }
 }

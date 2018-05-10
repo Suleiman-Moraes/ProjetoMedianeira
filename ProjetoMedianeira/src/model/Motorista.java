@@ -1,8 +1,10 @@
 package model;
 
+import interfaces.IDesmaterializar;
 import interfaces.IOrdenacao;
+import java.util.Vector;
 
-public class Motorista implements IOrdenacao<Motorista>{
+public class Motorista implements IOrdenacao<Motorista>, IDesmaterializar{
     //Atributos
     private String nome;
     private String localizacao;
@@ -93,5 +95,16 @@ public class Motorista implements IOrdenacao<Motorista>{
     @Override
     public String atributoDescricao_Nome() throws Exception {
         return this.getNome();
+    }
+
+    @Override
+    public Vector<String> desmaterializar() {
+        Vector<String> linha = new Vector<>();
+        
+        linha.add(getId() + "");
+        linha.add(getNome());
+        linha.add(getLocalizacao());
+        linha.add(getCnh());
+        return linha;
     }
 }

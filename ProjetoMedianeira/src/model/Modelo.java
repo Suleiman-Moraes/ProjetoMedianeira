@@ -1,8 +1,10 @@
 package model;
 
+import interfaces.IDesmaterializar;
 import interfaces.IOrdenacao;
+import java.util.Vector;
 
-public class Modelo implements IOrdenacao<Modelo>{
+public class Modelo implements IOrdenacao<Modelo>, IDesmaterializar{
     //Atributos
     private String marca;
     private String geracao;
@@ -116,5 +118,18 @@ public class Modelo implements IOrdenacao<Modelo>{
     @Override
     public String atributoDescricao_Nome() throws Exception {
         return this.marca;
+    }
+
+    @Override
+    public Vector<String> desmaterializar() {
+        Vector<String> linha = new Vector();
+                
+        linha.add(getId() + "");
+        linha.add(getMarca());
+        linha.add(getModelo());
+        linha.add(getGeracao());
+        linha.add(getTipo());
+        linha.add(getPoltrona() + "");
+        return linha;
     }
 }

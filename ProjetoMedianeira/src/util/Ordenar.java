@@ -1,5 +1,6 @@
 package util;
 
+import interfaces.IDesmaterializar;
 import java.util.Vector;
 
 public class Ordenar extends ClasseOrdenacao{
@@ -10,8 +11,10 @@ public class Ordenar extends ClasseOrdenacao{
     }
     
     @Override
-    public boolean compara(Vector a, Vector b)throws Exception{
-        if((a.get(indice)+"").compareToIgnoreCase(b.get(indice)+"") <= 0) return true;
+    public boolean compara(Object a, Object b)throws Exception{
+        Vector<String> aa = ((IDesmaterializar)a).desmaterializar();
+        Vector<String> bb = ((IDesmaterializar)b).desmaterializar();
+        if((aa.get(indice)+"").compareToIgnoreCase(bb.get(indice)+"") <= 0) return true;
             
         return false;
     }

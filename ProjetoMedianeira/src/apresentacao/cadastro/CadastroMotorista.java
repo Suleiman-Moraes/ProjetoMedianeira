@@ -3,7 +3,6 @@ package apresentacao.cadastro;
 import apresentacao.TelaPesquisa;
 import enun.Legenda;
 import fabrica.Fabrica;
-import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -13,7 +12,6 @@ import service.MotoristaService;
 public class CadastroMotorista extends Fabrica {
 
     private Vector<String> cabecalho;
-    private Vector detalhe;
     Legenda legenda = Legenda.MOTORISTA;
     
     public CadastroMotorista() {
@@ -269,7 +267,7 @@ public class CadastroMotorista extends Fabrica {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), new MotoristaService().visualizarAll(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -330,17 +328,6 @@ public class CadastroMotorista extends Fabrica {
             getCabecalho().add("Nome");
             getCabecalho().add("Localização");
             getCabecalho().add("CNH");
-            
-            detalhe = new Vector();
-            new MotoristaService().visualizarAll().forEachRemaining(tipo -> {
-                Vector<String> linha = new Vector();
-                
-                linha.add(tipo.getId() + "");
-                linha.add(tipo.getNome());
-                linha.add(tipo.getLocalizacao());
-                linha.add(tipo.getCnh());
-                getDetalhe().add(linha);
-            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   
@@ -365,9 +352,5 @@ public class CadastroMotorista extends Fabrica {
 
     public Vector<String> getCabecalho() {
         return cabecalho;
-    }
-
-    public Vector getDetalhe() {
-        return detalhe;
     }
 }

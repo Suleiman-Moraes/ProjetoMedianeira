@@ -32,7 +32,7 @@ import util.Validacao;
 public class CadastroViagem extends Fabrica implements ITabelaViagem{
 
     private Vector<String> cabecalho;
-    private Vector detalhe;
+    private Iterator detalhe;
     private Legenda legenda = Legenda.VIAGEM;
     
     public CadastroViagem() {
@@ -324,7 +324,7 @@ public class CadastroViagem extends Fabrica implements ITabelaViagem{
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
-            preencherTabela();
+            preencherTable();
             TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
             principal.add(tela);
             tela.setVisible(true);
@@ -509,11 +509,11 @@ public class CadastroViagem extends Fabrica implements ITabelaViagem{
         }
     }
     
-    public void preencherTabela() {
+    public void preencherTable() {
         try {
-            Vector[] vet = this.preencherTabela(detalhe, cabecalho);
-            cabecalho = vet[0];
-            detalhe = vet[1];
+            Object[] vet = this.preencherTabela();
+            cabecalho = (Vector<String>) vet[0];
+            detalhe = (Iterator) vet[1];
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   
@@ -553,7 +553,7 @@ public class CadastroViagem extends Fabrica implements ITabelaViagem{
         return cabecalho;
     }
 
-    public Vector getDetalhe() {
+    public Iterator getDetalhe() {
         return detalhe;
     }
 }

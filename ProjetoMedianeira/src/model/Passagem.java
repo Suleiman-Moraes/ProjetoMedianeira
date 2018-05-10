@@ -1,6 +1,8 @@
 package model;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
 
 public class Passagem extends Viagem {
     //Atributos
@@ -72,5 +74,30 @@ public class Passagem extends Viagem {
     @Override
     public String atributoDescricao_Nome() throws Exception {
         return this.getNome();
+    }
+    
+    @Override
+    public Vector<String> desmaterializar() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Vector<String> linha = new Vector();
+                
+        linha.add(getId() + "");
+        linha.add(getNome());
+        linha.add(getCpf());
+        linha.add(getNumeroPlotrona() + "");
+        linha.add(format.format(getDataSaida()));
+        linha.add(getDe());
+        linha.add(getAte());
+        if(getTurno())
+            linha.add("Manhã");
+        else linha.add("Noite");
+        linha.add("R$"+getValor());
+        linha.add(getMotorista().getNome());
+        linha.add(getOnibus().getNumero()+ "");
+        linha.add(getOnibus().getModelo().getMarca());
+        linha.add(getOnibus().getModelo().getModelo());
+        linha.add(getOnibus().getModelo().getGeracao());
+        linha.add(getOnibus().getModelo().getTipo());
+        return linha;
     }
 }

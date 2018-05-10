@@ -26,7 +26,6 @@ import service.OnibusService;
 public class CadastroOnibus extends Fabrica {
 
     private Vector<String> cabecalho;
-    private Vector detalhe;
     private Legenda legenda = Legenda.ONIBUS;
     
     public CadastroOnibus() {
@@ -285,7 +284,7 @@ public class CadastroOnibus extends Fabrica {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTabela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), new OnibusService().visualizarAll(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -378,28 +377,13 @@ public class CadastroOnibus extends Fabrica {
     public void preencherTabela() {
         try {
             cabecalho = new Vector();
-            getCabecalho().add("Código");
-            getCabecalho().add("Ano");
-            getCabecalho().add("Marca");
-            getCabecalho().add("Modelo");
-            getCabecalho().add("Geração");
-            getCabecalho().add("Tipo");
-            getCabecalho().add("Poltrona");
-            
-            detalhe = new Vector();
-            new OnibusService().visualizarAll().forEachRemaining(onibus -> {
-                Vector<String> linha = new Vector();
-                
-                linha.add(onibus.getNumero()+ "");
-                linha.add(onibus.getAno());
-                linha.add(onibus.getModelo().getMarca());
-                linha.add(onibus.getModelo().getModelo());
-                linha.add(onibus.getModelo().getGeracao());
-                linha.add(onibus.getModelo().getTipo());
-                linha.add(onibus.getModelo().getPoltrona() + "");
-                
-                getDetalhe().add(linha);
-            });
+            cabecalho.add("Código");
+            cabecalho.add("Ano");
+            cabecalho.add("Marca");
+            cabecalho.add("Modelo");
+            cabecalho.add("Geração");
+            cabecalho.add("Tipo");
+            cabecalho.add("Poltrona");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   
@@ -424,9 +408,5 @@ public class CadastroOnibus extends Fabrica {
 
     public Vector<String> getCabecalho() {
         return cabecalho;
-    }
-
-    public Vector getDetalhe() {
-        return detalhe;
     }
 }

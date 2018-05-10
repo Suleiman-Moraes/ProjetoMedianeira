@@ -1,13 +1,15 @@
 package util;
 
-import java.util.Vector;
+import interfaces.IOrdenacao;
 
 public class OrdenarID extends ClasseOrdenacao{
 
     @Override
-    public boolean compara(Vector a, Vector b)throws Exception{
+    public boolean compara(Object a, Object b)throws Exception{
         try {
-            if(new Integer(a.get(0)+"") <= new Integer(b.get(0)+"")) return true;
+            String aa = ((IOrdenacao)a).atributoIndentificador();
+            String bb = ((IOrdenacao)b).atributoIndentificador();
+            if(new Integer(aa+"") <= new Integer(bb+"")) return true;
             return false;
         } catch (Exception e) {
             return false;

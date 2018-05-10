@@ -22,7 +22,6 @@ import service.ModeloService;
 public class CadastroModelo extends Fabrica {
 
     private Vector<String> cabecalho;
-    private Vector detalhe;
     private Legenda legenda = Legenda.MODELO;
     
     public CadastroModelo() {
@@ -304,7 +303,7 @@ public class CadastroModelo extends Fabrica {
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         try {
             preencherTela();
-            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), getDetalhe(), legenda);
+            TelaPesquisa tela = new TelaPesquisa(principal, getCabecalho(), new ModeloService().visualizarAll(), legenda);
             principal.add(tela);
             tela.setVisible(true);
             this.dispose();
@@ -361,28 +360,12 @@ public class CadastroModelo extends Fabrica {
     public void preencherTela() {
         try {
             cabecalho = new Vector();
-            getCabecalho().add("Código");
-            getCabecalho().add("Marca");
-            getCabecalho().add("Modelo");
-            getCabecalho().add("Geração");
-            getCabecalho().add("Tipo");
-            getCabecalho().add("Poltrona");
-            
-            detalhe = new Vector();
-            Iterator<Modelo> lista = new ModeloService().visualizarAll();
-            while(lista.hasNext()){
-                Modelo modelo = lista.next();
-                Vector<String> linha = new Vector();
-                
-                linha.add(modelo.getId() + "");
-                linha.add(modelo.getMarca());
-                linha.add(modelo.getModelo());
-                linha.add(modelo.getGeracao());
-                linha.add(modelo.getTipo());
-                linha.add(modelo.getPoltrona() + "");
-                
-                getDetalhe().add(linha);
-            }
+            cabecalho.add("Código");
+            cabecalho.add("Marca");
+            cabecalho.add("Modelo");
+            cabecalho.add("Geração");
+            cabecalho.add("Tipo");
+            cabecalho.add("Poltrona");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   
@@ -408,11 +391,7 @@ public class CadastroModelo extends Fabrica {
     private javax.swing.JTextField jTextFieldPoltrona;
     private javax.swing.JTextField jTextFieldTipo;
     // End of variables declaration//GEN-END:variables
-
-    public Vector getDetalhe() {
-        return detalhe;
-    }
-
+    
     public Vector<String> getCabecalho() {
         return cabecalho;
     }
