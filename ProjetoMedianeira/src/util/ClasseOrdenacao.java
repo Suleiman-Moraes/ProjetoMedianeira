@@ -1,7 +1,7 @@
 package util;
 
 import enun.Legenda;
-import interfaces.ICrudDao;
+import fabrica.Fabrica;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,8 +9,7 @@ public abstract class ClasseOrdenacao{
     
     public Iterator bolha(Legenda legenda) throws Exception{
         int i, j;
-        ICrudDao tt = (ICrudDao) Class.forName(legenda.getService()).newInstance();
-        List<Object> vetor = tt.visualizarAll();
+        List<Object> vetor = Fabrica.getInstance(legenda);
 //        System.out.println(veto.hasNext());
 //        while(veto.hasNext()){
 //            Object o = veto.next();

@@ -54,11 +54,11 @@ public class PassagemDao implements ICrudDao<Passagem>{
         
         String sql = "SELECT * FROM passagem WHERE numero_poltrona=? AND id_viagem=?;";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, (int) object[0]);
-        ps.setInt(2, (int) object[1]);
+        ps.setInt(1, (int) object[1]);
+        ps.setInt(2, (int) object[0]);
         ResultSet rs = ps.executeQuery();
         
-        Viagem viagem = new ViagemDao().visualizarUm((int) object[1]);
+        Viagem viagem = new ViagemDao().visualizarUm((int) object[0]);
         
         Passagem passagem = new Passagem(viagem);
         while (rs.next()) {
