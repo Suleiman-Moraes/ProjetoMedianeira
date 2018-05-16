@@ -32,11 +32,9 @@ public class ViagemService implements ICrudService<Viagem> {
         if(t.getValor() <= 0){
             throw new Exception("Valor Inválido.");
         }
-        if (t.getId() > 0) {
-            new ViagemDao().alterar(t);
-        } else {
+        if (t.getId() <= 0) {
             new ViagemDao().inserir(t);
-        }
+        } 
     }
 
     @Override
