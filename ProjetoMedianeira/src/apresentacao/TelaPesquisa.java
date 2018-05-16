@@ -168,11 +168,14 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
             int linha = jTable1.getSelectedRow();
             String codigo = jTable1.getValueAt(linha, 0).toString();
             String codigoP = jTable1.getValueAt(linha, 3).toString();
-            tela = Fabrica.getInstance(legenda, principal, codigo, codigoP);
+            
+            if(Legenda.PASSAGEM != legenda){
+                tela = Fabrica.getInstance(legenda, principal, codigo, codigoP);
 
-            principal.add(tela);
-            tela.setVisible(true);
-            this.dispose();
+                principal.add(tela);
+                tela.setVisible(true);
+                this.dispose();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
