@@ -121,15 +121,15 @@ public class Modelo implements IOrdenacao<Modelo>, IDesmaterializar{
     }
 
     @Override
-    public Vector<String> desmaterializar() {
-        Vector<String> linha = new Vector();
+    public String[] desmaterializar() {
+        String[] linha = new String[6];
                 
-        linha.add(getId() + "");
-        linha.add(getMarca());
-        linha.add(getModelo());
-        linha.add(getGeracao());
-        linha.add(getTipo());
-        linha.add(getPoltrona() + "");
+        linha[0] = (getId() + "");
+        linha[1] = (getMarca());
+        linha[2] = (getModelo());
+        linha[3] = (getGeracao());
+        linha[4] = (getTipo());
+        linha[5] = (getPoltrona() + "");
         return linha;
     }
 }

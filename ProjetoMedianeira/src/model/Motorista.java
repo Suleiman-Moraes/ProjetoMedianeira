@@ -98,13 +98,13 @@ public class Motorista implements IOrdenacao<Motorista>, IDesmaterializar{
     }
 
     @Override
-    public Vector<String> desmaterializar() {
-        Vector<String> linha = new Vector<>();
+    public String[] desmaterializar() {
+        String[] linha = new String[4];
         
-        linha.add(getId() + "");
-        linha.add(getNome());
-        linha.add(getLocalizacao());
-        linha.add(getCnh());
+        linha[0] = (getId() + "");
+        linha[1] = (getNome());
+        linha[2] = (getLocalizacao());
+        linha[3] = (getCnh());
         return linha;
     }
 }

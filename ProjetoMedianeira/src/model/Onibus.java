@@ -90,16 +90,16 @@ public class Onibus implements IOrdenacao<Onibus>, IDesmaterializar{
     }
 
     @Override
-    public Vector<String> desmaterializar() {
-        Vector<String> linha = new Vector();
+    public String[] desmaterializar() {
+        String[] linha = new String[7];
                 
-        linha.add(getNumero()+ "");
-        linha.add(getAno());
-        linha.add(getModelo().getMarca());
-        linha.add(getModelo().getModelo());
-        linha.add(getModelo().getGeracao());
-        linha.add(getModelo().getTipo());
-        linha.add(getModelo().getPoltrona() + "");
+        linha[0] = (getNumero()+ "");
+        linha[1] = (getAno());
+        linha[2] = (getModelo().getMarca());
+        linha[3] = (getModelo().getModelo());
+        linha[4] = (getModelo().getGeracao());
+        linha[5] = (getModelo().getTipo());
+        linha[6] = (getModelo().getPoltrona() + "");
         return linha;
     }
 }

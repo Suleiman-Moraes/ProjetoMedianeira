@@ -121,28 +121,29 @@ public class Viagem implements IOrdenacao<Viagem>, IDesmaterializar{
     }
 
     @Override
-    public Vector<String> desmaterializar() {
+    public String[] desmaterializar() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Vector<String> linha = new Vector();
+        String[] linha = new String[16];
                 
-        linha.add(getId() + "");
-        linha.add(format.format(getDataSaida()));
-        linha.add(getDe());
-        linha.add(getAte());
-        if(getTurno())
-            linha.add("Manhã");
-        else linha.add("Noite");
-        linha.add("R$"+getValor());
-        linha.add(getMotorista().getNome());
-        linha.add(getMotorista().getLocalizacao());
-        linha.add(getMotorista().getCnh());
-        linha.add(getOnibus().getNumero()+ "");
-        linha.add(getOnibus().getAno());
-        linha.add(getOnibus().getModelo().getMarca());
-        linha.add(getOnibus().getModelo().getModelo());
-        linha.add(getOnibus().getModelo().getGeracao());
-        linha.add(getOnibus().getModelo().getTipo());
-        linha.add(getOnibus().getModelo().getPoltrona() + "");
+        linha[0] = (getId() + "");
+        linha[1] = (format.format(getDataSaida()));
+        linha[2] = (getDe());
+        linha[3] = (getAte());
+        
+        if(getTurno()) linha[4] = ("Manhã");
+        else linha[4] = ("Noite");
+        
+        linha[5] = ("R$"+getValor());
+        linha[6] = (getMotorista().getNome());
+        linha[7] = (getMotorista().getLocalizacao());
+        linha[8] = (getMotorista().getCnh());
+        linha[9] = (getOnibus().getNumero()+ "");
+        linha[10] = (getOnibus().getAno());
+        linha[11] = (getOnibus().getModelo().getMarca());
+        linha[12] = (getOnibus().getModelo().getModelo());
+        linha[13] = (getOnibus().getModelo().getGeracao());
+        linha[14] = (getOnibus().getModelo().getTipo());
+        linha[15] = (getOnibus().getModelo().getPoltrona() + "");
         return linha;
     }
 }

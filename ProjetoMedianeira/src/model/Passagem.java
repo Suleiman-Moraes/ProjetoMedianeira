@@ -77,27 +77,28 @@ public class Passagem extends Viagem {
     }
     
     @Override
-    public Vector<String> desmaterializar() {
+    public String[] desmaterializar() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Vector<String> linha = new Vector();
+        String[] linha = new String[15];
                 
-        linha.add(getId() + "");
-        linha.add(getNome());
-        linha.add(getCpf());
-        linha.add(getNumeroPlotrona() + "");
-        linha.add(format.format(getDataSaida()));
-        linha.add(getDe());
-        linha.add(getAte());
-        if(getTurno())
-            linha.add("Manhã");
-        else linha.add("Noite");
-        linha.add("R$"+getValor());
-        linha.add(getMotorista().getNome());
-        linha.add(getOnibus().getNumero()+ "");
-        linha.add(getOnibus().getModelo().getMarca());
-        linha.add(getOnibus().getModelo().getModelo());
-        linha.add(getOnibus().getModelo().getGeracao());
-        linha.add(getOnibus().getModelo().getTipo());
+        linha[0] = (getId() + "");
+        linha[1] = (getNome());
+        linha[2] = (getCpf());
+        linha[3] = (getNumeroPlotrona() + "");
+        linha[4] = (format.format(getDataSaida()));
+        linha[5] = (getDe());
+        linha[6] = (getAte());
+        
+        if(getTurno()) linha[7] = ("Manhã");
+        else linha[7] = ("Noite");
+        
+        linha[8] = ("R$"+getValor());
+        linha[9] = (getMotorista().getNome());
+        linha[10] = (getOnibus().getNumero()+ "");
+        linha[11] = (getOnibus().getModelo().getMarca());
+        linha[12] = (getOnibus().getModelo().getModelo());
+        linha[13] = (getOnibus().getModelo().getGeracao());
+        linha[14] = (getOnibus().getModelo().getTipo());
         return linha;
     }
 }
