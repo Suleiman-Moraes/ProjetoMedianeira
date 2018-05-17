@@ -1,7 +1,6 @@
 package util;
 
 import interfaces.IDesmaterializar;
-import java.util.Vector;
 
 public class Ordenar extends ClasseOrdenacao{
     private int indice;
@@ -12,9 +11,9 @@ public class Ordenar extends ClasseOrdenacao{
     
     @Override
     public boolean compara(Object a, Object b)throws Exception{
-        Vector<String> aa = ((IDesmaterializar)a).desmaterializar();
-        Vector<String> bb = ((IDesmaterializar)b).desmaterializar();
-        if((aa.get(indice)+"").compareToIgnoreCase(bb.get(indice)+"") <= 0) return true;
+        String[] aa = ((IDesmaterializar)a).desmaterializar();
+        String[] bb = ((IDesmaterializar)b).desmaterializar();
+        if((aa[indice]+"").compareToIgnoreCase(bb[indice]+"") <= 0) return true;
             
         return false;
     }
