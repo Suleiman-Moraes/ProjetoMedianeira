@@ -3,12 +3,16 @@ package apresentacao;
 import enun.Legenda;
 import fabrica.Fabrica;
 import interfaces.IDesmaterializar;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import util.ClasseOrdenacao;
 import util.Ordenar;
 import util.OrdenarID;
@@ -22,6 +26,7 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
     private Vector<String> cabecalho;
     private Iterator detalhe;
     private DefaultTableModel model;
+    private JTableHeader header;
     
     public TelaPesquisa(Legenda legenda) {
         initComponents();
@@ -162,25 +167,6 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonFecharActionPerformed
 
-    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        try {
-            JInternalFrame tela = null;
-            int linha = jTable1.getSelectedRow();
-            String codigo = jTable1.getValueAt(linha, 0).toString();
-            String codigoP = jTable1.getValueAt(linha, 3).toString();
-            
-//            if(Legenda.PASSAGEM != legenda){
-                tela = Fabrica.getInstance(legenda, principal, codigo, codigoP);
-
-                principal.add(tela);
-                tela.setVisible(true);
-                this.dispose();
-//            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jTable1MousePressed
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         try {
             if(jComboBox1.getSelectedIndex() != 0){
@@ -198,6 +184,26 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        try {
+            System.out.println("Aki");
+            JInternalFrame tela = null;
+            int linha = jTable1.getSelectedRow();
+            String codigo = jTable1.getValueAt(linha, 0).toString();
+            String codigoP = jTable1.getValueAt(linha, 3).toString();
+            
+//            if(Legenda.PASSAGEM != legenda){
+                tela = Fabrica.getInstance(legenda, principal, codigo, codigoP);
+
+                principal.add(tela);
+                tela.setVisible(true);
+                this.dispose();
+//            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jTable1MousePressed
+    
     private void popularGrid(){
         model = new DefaultTableModel(null, cabecalho);
         jTable1.setModel(model);
@@ -206,6 +212,18 @@ public class TelaPesquisa extends javax.swing.JInternalFrame {
             IDesmaterializar x = (IDesmaterializar) detalhe.next();
             model.addRow(x.desmaterializar());
         }
+        header = jTable1.getTableHeader();
+        header.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent event) {
+            System.out.println("aki"); 
+            Point point = event.getPoint();
+            int column = jTable1.columnAtPoint(point);
+
+            JOptionPane.showMessageDialog(jTable1, "Column header #" + column + " is clicked");
+         
+        // do your real thing here...
+        }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
